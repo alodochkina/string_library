@@ -1,8 +1,6 @@
 on: [push]
-defaults:
-  shell: bash
-  runs-on: macos-lately
 jobs:
   build:
+    runs-on: macos-lately
     steps:
       - run: make s21_string.a
