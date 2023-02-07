@@ -1,5 +1,6 @@
 on: [push]
-default:
+defaults:
+  shell: bash
   runs-on: macos-lately
 jobs:
   build:
