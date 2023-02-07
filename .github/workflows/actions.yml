@@ -5,5 +5,5 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/string_library@develop
+      - uses: actions/checkout@v3
       - run: make
