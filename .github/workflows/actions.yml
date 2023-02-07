@@ -1,6 +1,6 @@
 on: [push]
 jobs:
   build:
-    runs-on: macos-lately
+    runs-on: macos-latest
     steps:
       - run: make s21_string.a
