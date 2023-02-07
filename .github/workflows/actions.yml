@@ -3,7 +3,7 @@ on:
     branches: develop
 jobs:
   build:
+    runs-on: macos-latest
     steps:
-      - runs-on: macos-latest
       - uses: actions/checkout@v1
       - run: make s21_string.a
