@@ -5,4 +5,5 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      - uses: actions/string_library@develop
       - run: make
