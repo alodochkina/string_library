@@ -4,5 +4,6 @@ on:
 jobs:
   build:
     steps:
+      - runs-on: macos-latest
       - uses: actions/checkout@v1
       - run: make s21_string.a
