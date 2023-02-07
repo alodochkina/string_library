@@ -5,5 +5,5 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@
+      - uses: actions/checkout@develop
       - run: make
