@@ -1,6 +1,8 @@
-on: [push]
+on:
+  push:
+    branches: develop
 jobs:
   build:
     runs-on: macos-latest
     steps:
-      - run: make s21_string.a
+      - run: make
