@@ -1,5 +1,5 @@
 FLAGS = -Wall -Werror -Wextra -std=c11
-OBJECTS_C = s21_strcspn s21_strerror.c s21_strlen.c s21_strpbrk.c
+OBJECTS_C = s21_strcspn.c s21_strerror.c s21_strlen.c s21_strpbrk.c
 OBJECTS_O = s21_strcspn.o s21_strerror.o s21_strlen.o s21_strpbrk.o
 all: s21_string.a gcov_report
 rebuild: gcov_report test
