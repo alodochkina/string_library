@@ -17,12 +17,21 @@ jobs:
   gcov_report:
     runs-on: macos-latest
     needs: [build, test]
+    outputs:
+      output1: ${{ steps.step5.outputs.coverage }}
     steps:
-      - uses: actions/checkout@v1
-      - run: brew install check
-      - run: brew install gcov
-      - run: brew install lcov
-      - run: make gcov_report
+      - id: step1
+        uses: actions/checkout@v1
+      - id: step2
+        run: brew install check
+      - id: step3
+        run: brew install gcov
+      - id: step4
+        run: brew install lcov
+      - id: step5
+        run: make gcov_report >> $GITHUB_OUTPUT
+      - id: step6
+        run: echo ${{needs.gcov_report.outputs.output1}}
   style:
     runs-on: macos-latest
     needs: [build, test, gcov_report]

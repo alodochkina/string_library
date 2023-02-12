@@ -28,7 +28,7 @@ s21_size_t s21_strcspn(const char *str1, const char *str2) {  // определ�
         for (k = 0; str2[k] != '\0'; k++) {
             if (str1[i] == str2[k]) {
                 n = 1;
-                i++;
+                i--;
                 break;
             }
         }
