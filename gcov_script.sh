@@ -8,12 +8,13 @@ for coverage in $coverage_lines
 do
   coverage_lines=$(printf %.0f "$(echo "$coverage"*100 | bc)")
 done
-echo "$coverage_lines"
-echo "THISISHER"
 coverage_functions=$(awk '/functions/' report | awk '{print $2}')
-echo "HER"
+for coverage in $coverage_functions
+do
+  coverage_functions=$(printf %.0f "$(echo "$coverage"*100 | bc)")
+done
 echo "$coverage_functions"
-if [ "$coverage_lines" -gt 80 ] && [ "$coverage_functions" -gt 80 ]
-then return 0
-else return 1
+if [ "$coverage_lines" -gt 8000 ] && [ "$coverage_functions" -gt 8000 ]
+then exit 0
+else exit 1
 fi
