@@ -1,7 +1,7 @@
 #!/bin/bash
 
 report=$(make gcov_report)
-echo "$report"
+#echo "$report"
 coverage_lines=$(awk '/lines/' "$report" | awk '{print $2}')
 echo "$coverage_lines"
 echo "THISISHER"
