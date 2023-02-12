@@ -29,9 +29,7 @@ jobs:
       - id: step4
         run: brew install lcov
       - id: step5
-        run: make gcov_report >> $GITHUB_OUTPUT
-      - id: step6
-        run: echo ${{needs.gcov_report.outputs.output1}}
+        run: bash gcov_script.sh
   style:
     runs-on: macos-latest
     needs: [build, test, gcov_report]
