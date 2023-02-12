@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v1
       - run: make gcov_report
   style:
-    runs-on:
+    runs-on: macos-latest
     steps:
       - uses: action/checkout@v1
       - run: make style
