@@ -1,12 +1,12 @@
 #!/bin/bash
 
 make gcov_report >> report
-echo report
+cat ./report
 coverage_lines=$(awk '/lines/' report | awk '{print $2}')
 IFS=%
 for coverage in $coverage_lines
 do
-  coverage_lines=$($coverage | bc)
+  coverage_lines=$(bc "$coverage")
 done
 echo "$coverage_lines"
 echo "THISISHER"
