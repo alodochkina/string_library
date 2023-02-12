@@ -5,54 +5,54 @@
 // #include <stdio.h>
 
 
-//START_TEST(test_s21_strcspn) {
-//    const char *str1 = "askjdnka";
-//    const char *str2 = "sjhdbf";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_neg1) {
-//    const char *str1 = "\n";
-//    const char *str2 = " \n";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_neg2) {
-//    const char *str1 = "\t";
-//    const char *str2 = " \t";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_neg3) {
-//    const char *str1 = " \n";
-//    const char *str2 = "\n";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_neg4) {
-//    const char *str1 = " \t";
-//    const char *str2 = "\t";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_zero1) {
-//    const char *str1 = " \0";
-//    const char *str2 = "\0";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
-//
-//START_TEST(test_s21_strcspn_zero2) {
-//    const char *str1 = "\0";
-//    const char *str2 = " \0";
-//    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
-//}
-//END_TEST
+START_TEST(test_s21_strcspn) {
+    const char *str1 = "askjdnka";
+    const char *str2 = "sjhdbf";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_neg1) {
+    const char *str1 = "\n";
+    const char *str2 = " \n";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_neg2) {
+    const char *str1 = "\t";
+    const char *str2 = " \t";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_neg3) {
+    const char *str1 = " \n";
+    const char *str2 = "\n";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_neg4) {
+    const char *str1 = " \t";
+    const char *str2 = "\t";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_zero1) {
+    const char *str1 = " \0";
+    const char *str2 = "\0";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
+
+START_TEST(test_s21_strcspn_zero2) {
+    const char *str1 = "\0";
+    const char *str2 = " \0";
+    ck_assert_int_eq(strcspn(str1, str2), s21_strcspn(str1, str2));
+}
+END_TEST
 
 START_TEST(test_s21_strerror) {
     int errnum = 5;
