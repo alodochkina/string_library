@@ -23,7 +23,7 @@ jobs:
       - id: step2
         run: brew install check
       - id: step3
-        run: brew install gcov
+        run: brew install gcovr
       - id: step4
         run: brew install lcov
       - id: step5

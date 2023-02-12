@@ -6,7 +6,7 @@ coverage_lines=$(awk '/lines/' report | awk '{print $2}')
 IFS=%
 for coverage in $coverage_lines
 do
-  coverage_lines=$coverage
+  coverage_lines=$($coverage | bc)
 done
 echo "$coverage_lines"
 echo "THISISHER"
