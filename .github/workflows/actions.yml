@@ -17,8 +17,6 @@ jobs:
   gcov_report:
     runs-on: macos-latest
     needs: [build, test]
-    outputs:
-      output1: ${{ steps.step5.outputs.coverage }}
     steps:
       - id: step1
         uses: actions/checkout@v1
