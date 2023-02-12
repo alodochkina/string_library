@@ -13,7 +13,6 @@ for coverage in $coverage_functions
 do
   coverage_functions=$(printf %.0f "$(echo "$coverage"*100 | bc)")
 done
-echo "$coverage_functions"
 if [ "$coverage_lines" -gt 8000 ] && [ "$coverage_functions" -gt 8000 ]
 then exit 0
 else exit 1
