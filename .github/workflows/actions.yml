@@ -7,3 +7,18 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: make s21_string.a
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: make test
+  gcov_report:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: make gcov_report
+  style:
+    runs-on:
+    steps:
+      - uses: action/checkout@v1
+      - run: make style
