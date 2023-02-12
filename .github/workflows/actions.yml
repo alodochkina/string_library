@@ -28,4 +28,5 @@ jobs:
     needs: [build, test, gcov_report]
     steps:
       - uses: action/checkout@v1
+      - run: brew install clang-format
       - run: make style
