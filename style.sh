@@ -1,9 +1,9 @@
 #!/bin/bash
 
-make style >> test_style
-cat ./test_style
-if [ -n "$(cat ./test_style)" ]
+value=$(make style)
+#echo "$value"
+if [ -z "$value" ]
 then
-  exit 1
-else exit 0
+  exit 0
+else exit 1
 fi
