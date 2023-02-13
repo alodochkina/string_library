@@ -1,32 +1,31 @@
 #ifndef SRC_S21_STRING_H_
 #define SRC_S21_STRING_H_
 
+#include <float.h>
+#include <math.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <stdarg.h> 
-#include <float.h>
 // #include <string.h>
-#include <stdarg.h>         // Для va_list, va_arg, va_start, va_end
-#include <limits.h>         // Для max и min значений типов
-#include <wchar.h>          // Для широких символов в случаеБ если %lc и %ls
+#include <limits.h> // Для max и min значений типов
+#include <stdarg.h> // Для va_list, va_arg, va_start, va_end
+#include <wchar.h> // Для широких символов в случаеБ если %lc и %ls
 
 #define s21_size_t unsigned long long
-#define s21_NULL (void*)0
+#define s21_NULL (void *)0
 #define buff_size 5000
 #define eps 1e-100
 
-
 typedef struct struct_format {
-    int flag_Plus; // флаг, что есть плюс
-    int flag_Minus; // флаг, что есть минус
-    int flag_Space; 
-    int flag_Width;
-    int Width;
-    int flag_Precision;
-    int Precision;
-    int Lenght_l;
-    int Lenght_h;
+  int flag_Plus;  // флаг, что есть плюс
+  int flag_Minus; // флаг, что есть минус
+  int flag_Space;
+  int flag_Width;
+  int Width;
+  int flag_Precision;
+  int Precision;
+  int Lenght_l;
+  int Lenght_h;
 } struct_format;
 
 void *s21_to_upper(const char *str);
@@ -41,24 +40,23 @@ void *s21_memmove(void *dest, const void *src, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
 char *s21_strcat(char *dest, const char *src);
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
-int s21_strcmp(const char* str1, const char* str2);
-char* s21_strcpy(char* dest, const char* src);
+int s21_strcmp(const char *str1, const char *str2);
+char *s21_strcpy(char *dest, const char *src);
 s21_size_t s21_strcspn(const char *str1, const char *str2);
 char *s21_strerror(int errnum);
 s21_size_t s21_strlen(const char *str);
 char *s21_strchr(const char *str, int c);
-int s21_strncmp(const char* str1, const char* str2, s21_size_t n);
-char* s21_strncpy(char* dest, const char* src, s21_size_t n);
+int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
+char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
 s21_size_t s21_strspn(const char *str1, const char *str2);
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
-
-
 int s21_sprintf(char *str, const char *format, ...);
-void conversion(char **str, const char *format, struct_format *Params, va_list arg);
+void conversion(char **str, const char *format, struct_format *Params,
+                va_list arg);
 
 void char_conv(char **str, struct_format *Params, char c);
 void num_conv(char **str, struct_format *Params, char *str_arg);
@@ -86,11 +84,10 @@ int frac_size(double a);
 int inf_nan_check(double a);
 char *inf_nan_in_str(double a);
 
-
 double int_double(double a);
 void mirror(char *end, int *start, int n);
 double round_frac(double a, int n);
 char *lint_in_str(long int a, struct_format *Params);
 char *sint_in_str(short int a, struct_format *Params);
 
-#endif  //  SRC_S21_STRING_H_
+#endif //  SRC_S21_STRING_H_
