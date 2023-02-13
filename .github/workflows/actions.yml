@@ -34,4 +34,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: brew install clang-format
-      - run: make style
+      - run: bash style.sh
