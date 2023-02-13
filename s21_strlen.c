@@ -1,6 +1,6 @@
 // Copyright 2022 michaleh
-#include <stdio.h>
 #include "s21_string.h"
+#include <stdio.h>
 
 // #include <string.h>
 
@@ -15,7 +15,8 @@
 // }
 
 s21_size_t s21_strlen(const char *str) {
-    s21_size_t i;
-    for (i = 0; str[i] != '\0'; i++) {}
-    return i;
+  s21_size_t i;
+  for (i = 0; str[i] != '\0'; i++) {
+  }
+  return i;
 }

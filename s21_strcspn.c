@@ -17,21 +17,22 @@
 //           s21_strcspn(str1, str2));
 // }
 
-s21_size_t s21_strcspn(const char *str1, const char *str2) {  // определение длины
-    // начального сегмента str1, который полностью состоит из символов не
-    // входящих в str2
-    s21_size_t i = 0;  // счетчик для первой строки
-    s21_size_t k;  // счетчик для второй строки
-    s21_size_t n = 2;
+s21_size_t s21_strcspn(const char *str1,
+                       const char *str2) { // определение длины
+  // начального сегмента str1, который полностью состоит из символов не
+  // входящих в str2
+  s21_size_t i = 0; // счетчик для первой строки
+  s21_size_t k;     // счетчик для второй строки
+  s21_size_t n = 2;
 
-    for (i = 0; (str1[i] != '\0') && (n == 2) ; i++) {
-        for (k = 0; str2[k] != '\0'; k++) {
-            if (str1[i] == str2[k]) {
-                n = 1;
-                i--;
-                break;
-            }
-        }
+  for (i = 0; (str1[i] != '\0') && (n == 2); i++) {
+    for (k = 0; str2[k] != '\0'; k++) {
+      if (str1[i] == str2[k]) {
+        n = 1;
+        i--;
+        break;
+      }
     }
-    return i;
+  }
+  return i;
 }
