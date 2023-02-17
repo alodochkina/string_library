@@ -1,6 +1,5 @@
 // Copyright 2022 michaleh
-// #include <stdio.h>
-// #include <string.h>
+
 #include "s21_string.h"
 #include <stdlib.h>
 
@@ -266,19 +265,10 @@
 
 #endif
 
-// char *s21_strerror(int errnum);
-//
-// int main(void) {
-//    printf("%s\n", strerror(0));
-//    printf("%s\n", s21_strerror(0));
-//}
-
-char *s21_strerror(int errnum) { // Выполняет поиск во внутреннем массиве
-  // номера ошибки errnum и возвращает указатель на строку с сообщением
-  // об ошибке. Нужно объявить макросы, содержащие массивы сообщений об
-  // ошибке для операционных систем mac и linux. Описания ошибок есть в
-  // оригинальной библиотеке. Проверка текущей ОС осуществляется с помощью
-  // директив.
+char *s21_strerror(int errnum) {
+  // Analogues to the strerror function of the standard library
+  // The strerror() function accepts an error number argument errnum and returns
+  // a pointer to the corresponding message string
   char *text;
   char *answer;
   char *array[s21_err_max] = s21_errlist;
@@ -290,5 +280,5 @@ char *s21_strerror(int errnum) { // Выполняет поиск во внут�
     answer = text;
   }
   free(text);
-  return answer;
+  return *answer;
 }
