@@ -271,7 +271,7 @@ char *s21_strerror(int errnum) {
   // a pointer to the corresponding message string
   char text[1000];
   char *answer;
-  char array[s21_err_max] = *s21_errlist[];
+  char *array[s21_err_max] = s21_errlist;
   if ((errnum >= 0) && (errnum < s21_err_max)) {
     answer = array[errnum];
   } else {
