@@ -2,8 +2,7 @@
 
 #include "s21_string.h"
 
-s21_size_t s21_strcspn(const char *str1,
-                       const char *str2) {
+s21_size_t s21_strcspn(const char *str1, const char *str2) {
   // Analogous to the strcspn function of the standard library
   // The strcspn() function spans the initial part of the null-terminated string
   // str1 as long as the characters from str1 do not occur in the
