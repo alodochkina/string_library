@@ -6,7 +6,6 @@
 #define s21_size_t unsigned long long
 #define s21_NULL (void *)0
 
-
 s21_size_t s21_strcspn(const char *str1, const char *str2);
 // Analogues to the strcspn function of the standard library.
 // The strcspn() function spans the initial part of the null-terminated string
