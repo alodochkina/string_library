@@ -269,16 +269,14 @@ char *s21_strerror(int errnum) {
   // Analogues to the strerror function of the standard library
   // The strerror() function accepts an error number argument errnum and returns
   // a pointer to the corresponding message string
-  char *text;
+  char text[1000];
   char *answer;
-  char *array[s21_err_max] = s21_errlist;
-  text = malloc(150 * sizeof(char));
+//  char *array[s21_err_max] = s21_errlist;
   if ((errnum >= 0) && (errnum <= s21_err_max)) {
     answer = array[errnum];
   } else {
     sprintf(text, "Unknown error: %d", errnum);
     answer = text;
   }
-  free(text);
-  return *answer;
+  return answer;
 }
