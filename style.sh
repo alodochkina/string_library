@@ -1,7 +1,7 @@
 #!/bin/bash
 
 make style >> value
-cat ./value
+#cat ./value
 if [ -z "$value" ]
 then
   exit 0
