@@ -292,4 +292,3 @@ char *s21_strerror(int errnum) { // Выполняет поиск во внут�
   free(text);
   return answer;
 }
-
