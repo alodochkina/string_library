@@ -22,11 +22,11 @@ jobs:
         - run: brew install check
         - run: brew install gcovr
         - run: brew install lcov
-        - run: bash gcov_script.sh
+        - run: bash ./test_scripts/gcov_script.sh
   style:
     runs-on: macos-latest
     needs: [build, test, gcov_report]
     steps:
       - uses: actions/checkout@v1
       - run: brew install clang-format
-      - run: bash style.sh
+      - run: bash ./test_scripts/style.sh
