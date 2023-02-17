@@ -1,8 +1,7 @@
 #include "./s21_string.h"
 #include <check.h>
-// #include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
-// #include <stdio.h>
 
 START_TEST(test_s21_strcspn) {
   const char *str1 = "askjdnka";

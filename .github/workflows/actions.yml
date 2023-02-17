@@ -18,16 +18,11 @@ jobs:
     runs-on: macos-latest
     needs: [build, test]
     steps:
-      - id: step1
-        uses: actions/checkout@v1
-      - id: step2
-        run: brew install check
-      - id: step3
-        run: brew install gcovr
-      - id: step4
-        run: brew install lcov
-      - id: step5
-        run: bash gcov_script.sh
+        - uses: actions/checkout@v1
+        - run: brew install check
+        - run: brew install gcovr
+        - run: brew install lcov
+        - run: bash gcov_script.sh
   style:
     runs-on: macos-latest
     needs: [build, test, gcov_report]
