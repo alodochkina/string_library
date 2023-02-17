@@ -1,7 +1,7 @@
 #!/bin/bash
 
 value=$(make style)
-#echo "$value"
+echo "$value"
 if [ -z "$value" ]
 then
   exit 0
