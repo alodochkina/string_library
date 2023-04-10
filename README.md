@@ -1,4 +1,4 @@
-## Realization of four functions from <string.h>
+## Implementation of four functions from <string.h>. 
 
 - s21_strcspn
 
