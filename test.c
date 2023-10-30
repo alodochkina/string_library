@@ -3,6 +3,48 @@
 #include <stdlib.h>
 #include <string.h>
 
+START_TEST(test_s21_memchr) {
+  const void *str = "Hello, my darling";
+  int c = 'l';
+  s21_size_t n = 5;
+  ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
+}
+
+START_TEST(test_s21_memchr_1) {
+  const void *str = "Hello, my darling!";
+  int c = 'l';
+  s21_size_t n = 1;
+  ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
+}
+
+START_TEST(test_s21_memchr_2) {
+  const void *str = "Hello!";
+  int c = 'r';
+  s21_size_t n = 6;
+  ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
+}
+
+START_TEST(test_s21_memcmp) {
+  const void *str1 = "Hello, kitty!";
+  const void *str2 = "Hello, pitty!";
+  s21_size_t n = 8;
+  ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
+}
+
+START_TEST(test_s21_memcmp_1) {
+  const void *str1 = "Hello, pitty!";
+  const void *str2 = "Hello, kitty!";
+  s21_size_t n = 8;
+  ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
+}
+
+START_TEST(test_s21_memcmp_2) {
+  const void *str1 = "Hello, kitty!";
+  const void *str2 = "Hello, kitty!";
+  s21_size_t n = 8;
+  ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
+}
+
 START_TEST(test_s21_strcspn) {
   const char *str1 = "askjdnka";
   const char *str2 = "sjhdbf";
@@ -117,6 +159,10 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strerror);
   tcase_add_test(tc_core, test_s21_strlen);
   tcase_add_test(tc_core, test_s21_strpbrk);
+  tcase_add_test(tc_core, test_s21_memchr);
+  tcase_add_test(tc_core, test_s21_memcmp);
+  tcase_add_test(tc_core, test_s21_memcmp_1);
+  tcase_add_test(tc_core, test_s21_memcmp_2);
 
   suite_add_tcase(s, tc_core);
 
@@ -133,6 +179,9 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_limits, test_s21_strpbrk_neg2);
   tcase_add_test(tc_limits, test_s21_strpbrk_neg3);
   tcase_add_test(tc_limits, test_s21_strpbrk_neg4);
+  tcase_add_test(tc_core, test_s21_memchr_1);
+  tcase_add_test(tc_core, test_s21_memchr_2);
+
 
   suite_add_tcase(s, tc_limits);
 

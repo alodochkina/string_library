@@ -3,28 +3,29 @@
 
 #include <stdio.h>
 
-#define s21_size_t unsigned long long
-#define s21_NULL (void *)0
+#define s21_NULL ((void *)0)
+typedef unsigned long s21_size_t;
 
+enum result {not, equal, good};
+void *s21_memchr(const void *str, int c, s21_size_t n);
+int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
+void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+void *s21_memmove(void *dest, const void *src, s21_size_t n);
+void *s21_memset(void *str, int c, s21_size_t n);
+char *s21_strcat(char *dest, const char *src);
+char *s21_strncat(char *dest, const char *src);
+char *s21_strchr(const char *str, int c);
+int s21_strcmp(const char *str1, const char *str2, size_t n);
+int s21_strncmp(const char *str1, const char *str2, size_t n);
+char *s21_strcpy(char *dest, const char *src);
+char *s21_strncpy(char *dest, const char *src, size_t n);
 s21_size_t s21_strcspn(const char *str1, const char *str2);
-// Analogues to the strcspn function of the standard library.
-// The strcspn() function spans the initial part of the null-terminated string
-// str1  as long as the characters from str1 do not occur in the null-terminated
-// string str2.
-
 char *s21_strerror(int errnum);
-// Analogues to the strerror function of the standard library.
-// The strerror() function accepts an error number argument errnum and returns
-// a pointer to the corresponding message string.
-
 s21_size_t s21_strlen(const char *str);
-// Analogues to the strlen function of the standard library.
-// The strlen() function computes the length of the string str.
-
 char *s21_strpbrk(const char *str1, const char *str2);
-// Analogues to the strpbrk function of the standard library.
-// The strpbrk() function locates in the null-terminated string str1 the first
-// occurrence of any character in the string str2 and returns a pointer to this
-// character.
+char *s21_strrchr(const char *str, int c);
+s21_size_t s21_strspn(const char *str1, const char *str2);
+char *s21_strstr(const char *haystack, const char *needle);
+char *s21_strtok(char *str, const char *delim);
 
 #endif //  SRC_S21_STRING_H_

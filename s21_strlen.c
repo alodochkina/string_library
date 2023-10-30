@@ -1,4 +1,3 @@
-// Copyright 2022 michaleh
 #include "s21_string.h"
 
 s21_size_t s21_strlen(const char *str) {
