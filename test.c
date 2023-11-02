@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 START_TEST(test_s21_memchr) {
-  const void *str = "Hello, my darling";
-  int c = 'l';
+  const char str[] = "Hello, my darling";
+  const char c = 'l';
   s21_size_t n = 5;
   ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
 }
@@ -21,6 +22,13 @@ START_TEST(test_s21_memchr_2) {
   const void *str = "Hello!";
   int c = 'r';
   s21_size_t n = 6;
+  ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
+}
+
+START_TEST(test_s21_memchr_3) {
+  const void *str = "Hello!";
+  int c = 'r';
+  s21_size_t n = 8;
   ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
 }
 
@@ -43,6 +51,23 @@ START_TEST(test_s21_memcmp_2) {
   const void *str2 = "Hello, kitty!";
   s21_size_t n = 8;
   ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
+}
+
+START_TEST(test_s21_memcpy) {
+  char dest[50] = "oh";
+  char dest2[50] = "no";
+  const char src[50] = "Hello, kitty!";
+  s21_size_t n = 5;
+  ck_assert_str_eq(s21_memcpy(dest, src, n), memcpy(dest2, src, n));
+}
+
+START_TEST(test_s21_memmove) {
+  const char *src = "Hello, kitty! Hello, kitty!";
+  const char *src2 = "Hello, kitty! Hello, kitty!";
+  char dest[100];
+  char dest2[100];
+  s21_size_t n = 10;
+  ck_assert_str_eq(memmove(dest, src, n), s21_memmove(dest2, src2, n));
 }
 
 START_TEST(test_s21_strcspn) {
@@ -163,6 +188,8 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_memcmp);
   tcase_add_test(tc_core, test_s21_memcmp_1);
   tcase_add_test(tc_core, test_s21_memcmp_2);
+  tcase_add_test(tc_core, test_s21_memcpy);
+  tcase_add_test(tc_core, test_s21_memmove);
 
   suite_add_tcase(s, tc_core);
 
@@ -181,6 +208,7 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_limits, test_s21_strpbrk_neg4);
   tcase_add_test(tc_core, test_s21_memchr_1);
   tcase_add_test(tc_core, test_s21_memchr_2);
+  tcase_add_test(tc_core, test_s21_memchr_3);
 
 
   suite_add_tcase(s, tc_limits);
