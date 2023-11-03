@@ -64,10 +64,10 @@ START_TEST(test_s21_memcpy) {
 START_TEST(test_s21_memmove) {
   const char *src = "Hello, kitty! Hello, kitty!";
   const char *src2 = "Hello, kitty! Hello, kitty!";
-  char dest[100];
-  char dest2[100];
-  s21_size_t n = 10;
-  ck_assert_str_eq(memmove(dest, src, n), s21_memmove(dest2, src2, n));
+  char dest[100] = {0};
+  char dest2[100] = {0};
+  s21_size_t n = 8;
+  ck_assert_str_eq(s21_memmove(dest, src, n), memmove(dest2, src2, n));
 }
 
 START_TEST(test_s21_memset) {
@@ -79,14 +79,11 @@ START_TEST(test_s21_memset) {
 }
 
 START_TEST(test_s21_strcat) {
-  char src[] = "WTF?";
-  char dest[] = "OMG!";
-  char src2[] = "WTF?";
-  char dest2[] = "OMG!";
-  s21_strcat(dest, src);
-  strcat(dest2, src2);
-  printf("%s\n%s\n", dest, dest2);
-  ck_assert_str_eq(s21_strcat(dest, src), strcat(dest, src));
+  char src[50] = "WTF?";
+  char dest[50] = "OMG!";
+  char src2[50] = "WTF?";
+  char dest2[50] = "OMG!";;
+  ck_assert_str_eq(s21_strcat(dest, src), strcat(dest2, src2));
 }
 
 START_TEST(test_s21_strcspn) {
