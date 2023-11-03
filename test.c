@@ -82,8 +82,26 @@ START_TEST(test_s21_strcat) {
   char src[50] = "WTF?";
   char dest[50] = "OMG!";
   char src2[50] = "WTF?";
-  char dest2[50] = "OMG!";;
+  char dest2[50] = "OMG!";
   ck_assert_str_eq(s21_strcat(dest, src), strcat(dest2, src2));
+}
+
+START_TEST(test_s21_strncat) {
+  char src[50] = "WTF?";
+  char dest[50] = "OMG!";
+  char src2[50] = "WTF?";
+  char dest2[50] = "OMG!";
+  s21_size_t n = 3;
+  ck_assert_str_eq(s21_strncat(dest, src, n), strncat(dest2, src2, n));
+}
+
+START_TEST(test_s21_strncat2) {
+  char src[50] = "WTF?";
+  char dest[50] = "OMG!";
+  char src2[50] = "WTF?";
+  char dest2[50] = "OMG!";
+  s21_size_t n = 7;
+  ck_assert_str_eq(s21_strncat(dest, src, n), strncat(dest2, src2, n));
 }
 
 START_TEST(test_s21_strcspn) {
@@ -208,11 +226,14 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_memmove);
   tcase_add_test(tc_core, test_s21_memset);
   tcase_add_test(tc_core, test_s21_strcat);
+  tcase_add_test(tc_core, test_s21_strncat);
+
 
   suite_add_tcase(s, tc_core);
 
   tc_limits = tcase_create("Limits");
 
+  tcase_add_test(tc_core, test_s21_strncat2);
   tcase_add_test(tc_limits, test_s21_strcspn_neg1);
   tcase_add_test(tc_limits, test_s21_strcspn_neg2);
   tcase_add_test(tc_limits, test_s21_strcspn_neg3);
