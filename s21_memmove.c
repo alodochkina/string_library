@@ -7,7 +7,7 @@ void *s21_memmove(void *dest, const void *src, s21_size_t n) {
     for (s21_size_t i = 0; i < n; letter++, i++) {
       array[i] = *letter;
     }
-    array[n] = '\0';
+//    array[n] = '\0';
   }
   return dest;
 }
