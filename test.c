@@ -70,6 +70,14 @@ START_TEST(test_s21_memmove) {
   ck_assert_str_eq(memmove(dest, src, n), s21_memmove(dest2, src2, n));
 }
 
+START_TEST(test_s21_memset) {
+  char src[] = "Hello, kitty! Hello, kitty!";
+  char src2[] = "Hello, kitty! Hello, kitty!";
+  int c = '%';
+  s21_size_t n = 10;
+  ck_assert_str_eq(s21_memset(src, c, n), memset(src2, c, n));
+}
+
 START_TEST(test_s21_strcspn) {
   const char *str1 = "askjdnka";
   const char *str2 = "sjhdbf";
@@ -190,6 +198,7 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_memcmp_2);
   tcase_add_test(tc_core, test_s21_memcpy);
   tcase_add_test(tc_core, test_s21_memmove);
+  tcase_add_test(tc_core, test_s21_memset);
 
   suite_add_tcase(s, tc_core);
 

@@ -8,7 +8,8 @@ OBJECTS_O = s21_memchr.o s21_memcmp.o s21_memcpy.o s21_memmove.o s21_memset.o s2
 	s21_strcpy.o s21_strcspn.o s21_strerror.o s21_strlen.o s21_strncat.o s21_strncmp.o s21_strncpy.o s21_strpbrk.o \
 	s21_strrchr.o s21_strspn.o s21_strstr.o s21_strtok.o
 all: s21_string.a gcov_report
-rebuild: clean gcov_report
+rebuild2: clean gcov_report
+rebuild: clean test
 s21_string.o:
 	gcc $(FLAGS) -c $(OBJECTS_C)
 clean:
