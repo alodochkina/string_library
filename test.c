@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 START_TEST(test_s21_memchr) {
   const char str[] = "Hello, my darling";
   const char c = 'l';
@@ -102,6 +101,12 @@ START_TEST(test_s21_strncat2) {
   char dest2[50] = "OMG!";
   s21_size_t n = 7;
   ck_assert_str_eq(s21_strncat(dest, src, n), strncat(dest2, src2, n));
+}
+
+START_TEST(test_s21_strchr) {
+  const char *str = "I believe I can fly!";
+  char c = 'c';
+  ck_assert_ptr_eq(s21_strchr(str, c), strchr(str, c));
 }
 
 START_TEST(test_s21_strcspn) {
@@ -227,7 +232,7 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_memset);
   tcase_add_test(tc_core, test_s21_strcat);
   tcase_add_test(tc_core, test_s21_strncat);
-
+  tcase_add_test(tc_core, test_s21_strchr);
 
   suite_add_tcase(s, tc_core);
 
@@ -248,7 +253,6 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_memchr_1);
   tcase_add_test(tc_core, test_s21_memchr_2);
   tcase_add_test(tc_core, test_s21_memchr_3);
-
 
   suite_add_tcase(s, tc_limits);
 
