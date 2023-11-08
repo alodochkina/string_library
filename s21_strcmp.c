@@ -14,9 +14,7 @@ int s21_strcmp(const char *str1, const char *str2) {
           break;
         }
       } else {
-        if (s21_strlen(str1) == s21_strlen(str2)) {
-          what = equal;
-        }
+        what = equal;
       }
     }
   }

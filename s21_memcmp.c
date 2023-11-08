@@ -18,9 +18,7 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {
           break;
         }
       } else {
-        if (s21_strlen(str1) == s21_strlen(str2)) {
-          what = equal;
-        }
+        what = equal;
       }
     }
   }

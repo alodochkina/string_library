@@ -109,6 +109,12 @@ START_TEST(test_s21_strchr) {
   ck_assert_ptr_eq(s21_strchr(str, c), strchr(str, c));
 }
 
+START_TEST(test_s21_strchr1) {
+  const char *str = "I believe I can fly!";
+  char c = 'z';
+  ck_assert_ptr_eq(s21_strchr(str, c), strchr(str, c));
+}
+
 START_TEST(test_s21_strcmp) {
   const void *str1 = "Hello, kitty!";
   const void *str2 = "Hello, pitty!";
@@ -125,6 +131,27 @@ START_TEST(test_s21_strcmp_2) {
   const void *str1 = "Hello, kitty!";
   const void *str2 = "Hello, kitty!";
   ck_assert_int_eq(s21_strcmp(str1, str2), strcmp(str1, str2));
+}
+
+START_TEST(test_s21_strncmp) {
+  const void *str1 = "Hello, kitty!";
+  const void *str2 = "Hello, pitty!";
+  s21_size_t n = 13;
+  ck_assert_int_eq(s21_strncmp(str1, str2, n), strncmp(str1, str2, n));
+}
+
+START_TEST(test_s21_strncmp_1) {
+  const void *str1 = "Hello, pitty!";
+  const void *str2 = "Hello, kitty!";
+  s21_size_t n = 30;
+  ck_assert_int_eq(s21_strncmp(str1, str2, n), strncmp(str1, str2, n));
+}
+
+START_TEST(test_s21_strncmp_2) {
+  const void *str1 = "Hello, kitty!";
+  const void *str2 = "Hello, kitty!";
+  s21_size_t n = 13;
+  ck_assert_int_eq(s21_strncmp(str1, str2, n), strncmp(str1, str2, n));
 }
 
 START_TEST(test_s21_strcspn) {
@@ -251,9 +278,13 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strcat);
   tcase_add_test(tc_core, test_s21_strncat);
   tcase_add_test(tc_core, test_s21_strchr);
+  tcase_add_test(tc_core, test_s21_strchr1);
   tcase_add_test(tc_core, test_s21_strcmp);
   tcase_add_test(tc_core, test_s21_strcmp_1);
   tcase_add_test(tc_core, test_s21_strcmp_2);
+  tcase_add_test(tc_core, test_s21_strncmp);
+  tcase_add_test(tc_core, test_s21_strncmp_1);
+  tcase_add_test(tc_core, test_s21_strncmp_2);
 
   suite_add_tcase(s, tc_core);
 
