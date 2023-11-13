@@ -154,6 +154,13 @@ START_TEST(test_s21_strncmp_2) {
   ck_assert_int_eq(s21_strncmp(str1, str2, n), strncmp(str1, str2, n));
 }
 
+START_TEST(test_s21_strcpy) {
+  char dest[50] = "oh";
+  char dest2[50] = "no";
+  const char src[50] = "Hello, kitty!";
+  ck_assert_str_eq(s21_strcpy(dest, src), strcpy(dest2, src));
+}
+
 START_TEST(test_s21_strcspn) {
   const char *str1 = "askjdnka";
   const char *str2 = "sjhdbf";
@@ -285,6 +292,7 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strncmp);
   tcase_add_test(tc_core, test_s21_strncmp_1);
   tcase_add_test(tc_core, test_s21_strncmp_2);
+  tcase_add_test(tc_core, test_s21_strcpy);
 
   suite_add_tcase(s, tc_core);
 
