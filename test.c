@@ -233,7 +233,7 @@ START_TEST(test_s21_strerror) {
 END_TEST
 
 START_TEST(test_s21_strerror_zero) {
-  int errnum = 0;
+  int errnum = -2;
   ck_assert_str_eq(strerror(errnum), s21_strerror(errnum));
 }
 END_TEST
