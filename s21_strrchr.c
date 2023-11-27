@@ -3,16 +3,18 @@
 char *s21_strrchr(const char *str, int c) {
   enum result what;
   const char *catch = s21_NULL;
-  what = not;
+  what = not ;
   if (str != s21_NULL) {
-    for(; *str != '\0'; str++) {
+    for (; *str != '\0'; str++) {
       if (*str == (unsigned char)c) {
         catch = str;
         what = good;
         break;
       }
     }
-  } if (what == good) {
+  }
+  if (what == good) {
     return (char *)catch;
-  } else return s21_NULL;
+  } else
+    return s21_NULL;
 }

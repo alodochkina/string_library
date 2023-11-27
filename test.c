@@ -235,13 +235,13 @@ END_TEST
 START_TEST(test_s21_strrchr) {
   const char *str = "what a fiction!";
   char c = '!';
-  ck_assert_ptr_eq(s21_strrchr(str,c), strrchr(str,c));
+  ck_assert_ptr_eq(s21_strrchr(str, c), strrchr(str, c));
 }
 
 START_TEST(test_s21_strrchr2) {
   const char *str = "what a fiction!";
   char c = 'r';
-  ck_assert_ptr_eq(s21_strrchr(str,c), strrchr(str,c));
+  ck_assert_ptr_eq(s21_strrchr(str, c), strrchr(str, c));
 }
 
 START_TEST(test_s21_strerror_zero) {
