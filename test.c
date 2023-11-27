@@ -232,6 +232,18 @@ START_TEST(test_s21_strerror) {
 }
 END_TEST
 
+START_TEST(test_s21_strrchr) {
+  const char *str = "what a fiction!";
+  char c = '!';
+  ck_assert_ptr_eq(s21_strrchr(str,c), strrchr(str,c));
+}
+
+START_TEST(test_s21_strrchr2) {
+  const char *str = "what a fiction!";
+  char c = 'r';
+  ck_assert_ptr_eq(s21_strrchr(str,c), strrchr(str,c));
+}
+
 START_TEST(test_s21_strerror_zero) {
   int errnum = -2;
   ck_assert_str_eq(strerror(errnum), s21_strerror(errnum));
@@ -311,6 +323,8 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strcpy);
   tcase_add_test(tc_core, test_s21_strncpy);
   tcase_add_test(tc_core, test_s21_strncpy1);
+  tcase_add_test(tc_core, test_s21_strrchr);
+  tcase_add_test(tc_core, test_s21_strrchr2);
 
   suite_add_tcase(s, tc_core);
 
