@@ -256,6 +256,24 @@ START_TEST(test_s21_strerror_zero) {
 }
 END_TEST
 
+START_TEST(test_s21_strstr) {
+  const char *str = "Hello, Kitty!";
+  char *str1 = "Kitty!";
+  ck_assert_ptr_eq(s21_strstr(str, str1), strstr(str, str1));
+}
+
+START_TEST(test_s21_strstr_1) {
+  const char *str = "Hello, Kitty!";
+  char *str1 = "Pitty!";
+  ck_assert_ptr_eq(s21_strstr(str, str1), strstr(str, str1));
+}
+
+START_TEST(test_s21_strstr_2) {
+  const char *str = "Hello, Kitty!";
+  char *str1 = "Kitry!";
+  ck_assert_ptr_eq(s21_strstr(str, str1), strstr(str, str1));
+}
+
 START_TEST(test_s21_strpbrk) {
   const char *str1 = "askjdnka";
   const char *str2 = "sjhdbf";
@@ -332,6 +350,9 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strrchr);
   tcase_add_test(tc_core, test_s21_strrchr2);
   tcase_add_test(tc_core, test_s21_strspn);
+  tcase_add_test(tc_core, test_s21_strstr);
+  tcase_add_test(tc_core, test_s21_strstr_1);
+  tcase_add_test(tc_core, test_s21_strstr_2);
 
   suite_add_tcase(s, tc_core);
 
