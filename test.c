@@ -316,6 +316,18 @@ START_TEST(test_s21_strlen) {
 }
 END_TEST
 
+START_TEST(test_s21_strtok) {
+  char str[100] = "What's, up, hello, kitty!";
+  const char *delim = ",";
+  ck_assert_ptr_eq(s21_strtok(&str[0], delim), strtok(&str[0], delim));
+}
+
+START_TEST(test_s21_strtok_1) {
+  char str[100] = "What's, up, hello, kitty!";
+  const char *delim = ".";
+  ck_assert_ptr_eq(s21_strtok(&str[0], delim), strtok(&str[0], delim));
+}
+
 Suite *s21_string_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -353,6 +365,8 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strstr);
   tcase_add_test(tc_core, test_s21_strstr_1);
   tcase_add_test(tc_core, test_s21_strstr_2);
+  tcase_add_test(tc_core, test_s21_strtok);
+  tcase_add_test(tc_core, test_s21_strtok_1);
 
   suite_add_tcase(s, tc_core);
 
