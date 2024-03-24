@@ -29,6 +29,7 @@ typedef struct s21_parse_format S21_parse_format;
 struct s21_forma {
   char* str_format;
   char* str_argument;
+  char* result_string;
   S21_parse_format parser;
   struct s21_forma* next_format;
 };
@@ -67,4 +68,10 @@ void check_width(S21_forma* curr_point, int* i);
 void check_precision(S21_forma* curr_point, int* i);
 void check_length(S21_forma* curr_point, int* i);
 void check_specifier(S21_forma* specifier, int* i);
+int char_to_int(char c);
+void print(char* str, S21_forma* start_point);
+char* print_character(S21_forma* curr_point);
+char* print_integer(S21_forma* curr_point);
+char* print_float(S21_forma* curr_point);
+char* print_others(S21_forma* curr_point);
 #endif //  SRC_S21_STRING_H_

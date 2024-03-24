@@ -3,10 +3,10 @@ LDFLAGS=-L/opt/homebrew/lib
 IFLAGS=-I/opt/homebrew/include
 OBJECTS_C = s21_memchr.c s21_memcmp.c s21_memcpy.c s21_memmove.c s21_memset.c s21_strcat.c s21_strchr.c s21_strcmp.c \
 	s21_strcpy.c s21_strcspn.c s21_strerror.c s21_strlen.c s21_strncat.c s21_strncmp.c s21_strncpy.c s21_strpbrk.c \
-	s21_strrchr.c s21_strspn.c s21_strstr.c s21_strtok.c
+	s21_strrchr.c s21_strspn.c s21_strstr.c s21_strtok.c s21_sprintf.c s21_add_functions.c
 OBJECTS_O = s21_memchr.o s21_memcmp.o s21_memcpy.o s21_memmove.o s21_memset.o s21_strcat.o s21_strchr.o s21_strcmp.o \
 	s21_strcpy.o s21_strcspn.o s21_strerror.o s21_strlen.o s21_strncat.o s21_strncmp.o s21_strncpy.o s21_strpbrk.o \
-	s21_strrchr.o s21_strspn.o s21_strstr.o s21_strtok.o
+	s21_strrchr.o s21_strspn.o s21_strstr.o s21_strtok.o s21_sprintf.o s21_add_functions.o
 all: s21_string.a gcov_report
 rebuild2: clean gcov_report
 rebuild: clean test

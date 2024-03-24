@@ -10,6 +10,13 @@ START_TEST(test_s21_memchr) {
   ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
 }
 
+START_TEST(test_s21_memchr_z) {
+  const char str[] = {74, 102, 104};
+  const char c = 'h';
+  s21_size_t n = 5;
+  ck_assert_ptr_eq(s21_memchr(str, c, n), memchr(str, c, n));
+}
+
 START_TEST(test_s21_memchr_1) {
   const void *str = "Hello, my darling!";
   int c = 'l';
@@ -331,7 +338,6 @@ START_TEST(test_s21_strtok_1) {
 Suite *s21_string_suite(void) {
   Suite *s;
   TCase *tc_core;
-  TCase *tc_limits;
   s = suite_create("s21_string");
   tc_core = tcase_create("Core");
 
@@ -340,6 +346,7 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strlen);
   tcase_add_test(tc_core, test_s21_strpbrk);
   tcase_add_test(tc_core, test_s21_memchr);
+  tcase_add_test(tc_core, test_s21_memchr_z);
   tcase_add_test(tc_core, test_s21_memcmp);
   tcase_add_test(tc_core, test_s21_memcmp_1);
   tcase_add_test(tc_core, test_s21_memcmp_2);
@@ -367,28 +374,23 @@ Suite *s21_string_suite(void) {
   tcase_add_test(tc_core, test_s21_strstr_2);
   tcase_add_test(tc_core, test_s21_strtok);
   tcase_add_test(tc_core, test_s21_strtok_1);
-
-  suite_add_tcase(s, tc_core);
-
-  tc_limits = tcase_create("Limits");
-
   tcase_add_test(tc_core, test_s21_strncat2);
-  tcase_add_test(tc_limits, test_s21_strcspn_neg1);
-  tcase_add_test(tc_limits, test_s21_strcspn_neg2);
-  tcase_add_test(tc_limits, test_s21_strcspn_neg3);
-  tcase_add_test(tc_limits, test_s21_strcspn_neg4);
-  tcase_add_test(tc_limits, test_s21_strcspn_zero1);
-  tcase_add_test(tc_limits, test_s21_strcspn_zero2);
-  tcase_add_test(tc_limits, test_s21_strerror_zero);
-  tcase_add_test(tc_limits, test_s21_strpbrk_neg1);
-  tcase_add_test(tc_limits, test_s21_strpbrk_neg2);
-  tcase_add_test(tc_limits, test_s21_strpbrk_neg3);
-  tcase_add_test(tc_limits, test_s21_strpbrk_neg4);
+  tcase_add_test(tc_core, test_s21_strcspn_neg1);
+  tcase_add_test(tc_core, test_s21_strcspn_neg2);
+  tcase_add_test(tc_core, test_s21_strcspn_neg3);
+  tcase_add_test(tc_core, test_s21_strcspn_neg4);
+  tcase_add_test(tc_core, test_s21_strcspn_zero1);
+  tcase_add_test(tc_core, test_s21_strcspn_zero2);
+  tcase_add_test(tc_core, test_s21_strerror_zero);
+  tcase_add_test(tc_core, test_s21_strpbrk_neg1);
+  tcase_add_test(tc_core, test_s21_strpbrk_neg2);
+  tcase_add_test(tc_core, test_s21_strpbrk_neg3);
+  tcase_add_test(tc_core, test_s21_strpbrk_neg4);
   tcase_add_test(tc_core, test_s21_memchr_1);
   tcase_add_test(tc_core, test_s21_memchr_2);
   tcase_add_test(tc_core, test_s21_memchr_3);
 
-  suite_add_tcase(s, tc_limits);
+  suite_add_tcase(s, tc_core);
 
   return s;
 }
