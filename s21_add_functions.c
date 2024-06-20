@@ -25,14 +25,14 @@ void check_format(const char *format, S21_forma* curr_point) {
 
 void parser_format(S21_forma* curr_point) {
   int i = 1;
-  while (curr_point->str_format != s21_NULL) {
-//    if (*curr_point->str_format == '%') {
-//      check_flags(curr_point, &i);
-//      check_width(curr_point, &i);
-//      check_precision(curr_point, &i);
-//      check_length(curr_point, &i);
-//      check_specifier(curr_point, &i);
-//    }
+  while (curr_point != s21_NULL) {
+    if (*curr_point->str_format == '%') {
+      check_flags(curr_point, &i);
+      check_width(curr_point, &i);
+      check_precision(curr_point, &i);
+      check_length(curr_point, &i);
+      check_specifier(curr_point, &i);
+    }
     curr_point = curr_point->next_format;
     i = 1;
   }
@@ -111,7 +111,7 @@ void check_specifier(S21_forma* curr_point, int* count) {
   case 'X': curr_point->parser.specifier = X; ++*count; break;
   case 'p': curr_point->parser.specifier = p; ++*count; break;
   case 'n': curr_point->parser.specifier = n; ++*count; break;
-  case '%': curr_point->parser.specifier = percent; puts("%");++*count; break;
+  case '%': puts("ololo");curr_point->parser.specifier = percent; puts("%");++*count; break;
   default: curr_point->parser.specifier = no_specifier;
   }
 }
@@ -132,20 +132,36 @@ int char_to_int(char c) {
   } return res;
 }
 
+char* int_to_string(int d) {
+  int* num = &d;
+  char* res;
+  int count = 0;
+  while(*num/10 > 10) {
+    *num/= 10;
+    count++;
+  }
+
+  puts("topopo");
+
+  printf("%s\n", res);
+  puts("loplo");
+}
+
 void print(char* string, S21_forma* curr_point) {
-  while (curr_point->str_format != s21_NULL) {
+  char res[1000];
+  while (curr_point != s21_NULL) {
     if (curr_point->parser.specifier == no_specifier ||
         curr_point->parser.specifier == c ||
         curr_point->parser.specifier == s ||
         curr_point->parser.specifier == percent) {
-      curr_point->result_string = print_character(curr_point);
+      print_character(curr_point, res);
     } else if (curr_point->parser.specifier == d ||
                curr_point->parser.specifier == i ||
                curr_point->parser.specifier == o ||
                curr_point->parser.specifier == u ||
                curr_point->parser.specifier == x ||
                curr_point->parser.specifier == X) {
-      curr_point->result_string = print_integer(curr_point);
+      print_integer(curr_point, res);
     } else if (curr_point->parser.specifier == e ||
                curr_point->parser.specifier == E ||
                curr_point->parser.specifier == f ||
@@ -156,19 +172,40 @@ void print(char* string, S21_forma* curr_point) {
                curr_point->parser.specifier == n) {
         curr_point->result_string = print_others(curr_point);
     } curr_point = curr_point->next_format;
+    printf("%s\n", res);
+    puts("lop");
+    printf("%d \n", (int)(char*)curr_point->str_argument);
+    puts("lop");
   }
 }
 
-char* print_character(S21_forma* curr_point) {
-  puts("ololo");
-  char* str = curr_point->str_argument;
-
-  return str;
+void print_character(S21_forma* curr_point, char* res) {
+  puts("enter");
+  if (curr_point->parser.specifier == c) {
+    *res = (char)curr_point->str_argument;
+    printf("%s \n", res);
+  } else {
+    strcat(res, curr_point->str_argument);
+  }
 }
 
-char* print_integer(S21_forma* curr_point) {
-  char* str = curr_point->str_argument;
-  return str;
+void print_integer(S21_forma* curr_point, char* res) {
+  int count = 0;
+  puts("popo");
+ // printf("%s\n", curr_point->str_argument);
+  puts("ololo");
+  char* s = int_to_string((int)(char*)curr_point->str_argument);
+ // res = (char*)curr_point->str_argument-'0';
+  printf("%s\n", s);
+  puts("koko");
+//  while (*(curr_point->str_argument)) {
+//    printf("%d ", (int)curr_point->str_argument[count++]);
+//  }
+//  puts("");
+//  res = (int)(char*)curr_point->str_argument;
+ // strcat(res, (char*)num);
+  puts("poooop");
+  printf("%s \n", res);
 }
 
 char* print_float(S21_forma* curr_point) {
