@@ -132,19 +132,42 @@ int char_to_int(char c) {
   } return res;
 }
 
-char* int_to_string(int d) {
-  int* num = &d;
-  char* res;
-  int count = 0;
-  while(*num/10 > 10) {
-    *num/= 10;
+char* int_to_string(long long d) {
+  long num = d;
+  long sum = d;
+  long count = 0;
+  int* result_number = malloc((count+1)*sizeof(int));
+  while(num >= 1) {
+    num/= 10;
     count++;
+    result_number[count-1] = sum - num * 10;
+    sum = num;
+    result_number = realloc(result_number,(count + 1) * sizeof(int));
   }
+  char* result_char = malloc((count+1)*sizeof(char));
+  for(int i = 0, j = count - 1; i < count; i++, j--) {
+    switch(result_number[i]) {
+    case 0: result_char[j] = '0'; break;
+    case 1: result_char[j] = '1'; break;
+    case 2: result_char[j] = '2'; break;
+    case 3: result_char[j] = '3'; break;
+    case 4: result_char[j] = '4'; break;
+    case 5: result_char[j] = '5'; break;
+    case 6: result_char[j] = '6'; break;
+    case 7: result_char[j] = '7'; break;
+    case 8: result_char[j] = '8'; break;
+    case 9: result_char[j] = '9'; break;
+    default:;
+    }
+  }
+  return result_char;
+}
 
-  puts("topopo");
-
-  printf("%s\n", res);
-  puts("loplo");
+char string_to_char(char *string) {
+  char c = (long)string - '0';
+  printf("%c ", c);
+  puts("char");
+  return c;
 }
 
 void print(char* string, S21_forma* curr_point) {
@@ -174,38 +197,28 @@ void print(char* string, S21_forma* curr_point) {
     } curr_point = curr_point->next_format;
     printf("%s\n", res);
     puts("lop");
-    printf("%d \n", (int)(char*)curr_point->str_argument);
-    puts("lop");
   }
 }
 
 void print_character(S21_forma* curr_point, char* res) {
-  puts("enter");
   if (curr_point->parser.specifier == c) {
-    *res = (char)curr_point->str_argument;
-    printf("%s \n", res);
+    char *c = curr_point->str_argument;
+    int size = strlen(res);
+    *(res+size) = (long)curr_point->str_argument - 0;
   } else {
     strcat(res, curr_point->str_argument);
   }
 }
 
 void print_integer(S21_forma* curr_point, char* res) {
-  int count = 0;
+  char *s = malloc(sizeof(curr_point->str_argument));
+  if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)
+    s = int_to_string((long)curr_point->str_argument);
+  if (curr_point->parser.specifier == u)
+    printf("%u \n", UINT32_MAX);
   puts("popo");
- // printf("%s\n", curr_point->str_argument);
-  puts("ololo");
-  char* s = int_to_string((int)(char*)curr_point->str_argument);
- // res = (char*)curr_point->str_argument-'0';
-  printf("%s\n", s);
-  puts("koko");
-//  while (*(curr_point->str_argument)) {
-//    printf("%d ", (int)curr_point->str_argument[count++]);
-//  }
-//  puts("");
-//  res = (int)(char*)curr_point->str_argument;
- // strcat(res, (char*)num);
-  puts("poooop");
-  printf("%s \n", res);
+    s = int_to_string(UINT32_MAX + (long)curr_point->str_argument + 1);
+    strcat(res, s);
 }
 
 char* print_float(S21_forma* curr_point) {

@@ -69,9 +69,11 @@ void check_precision(S21_forma* curr_point, int* i);
 void check_length(S21_forma* curr_point, int* i);
 void check_specifier(S21_forma* specifier, int* i);
 int char_to_int(char c);
+char* int_to_string(long long d);
+char string_to_char(char* string);
 void print(char* str, S21_forma* start_point);
-char* print_character(S21_forma* curr_point);
-char* print_integer(S21_forma* curr_point);
+void print_character(S21_forma* curr_point, char* res);
+void print_integer(S21_forma* curr_point, char* res);
 char* print_float(S21_forma* curr_point);
 char* print_others(S21_forma* curr_point);
 #endif //  SRC_S21_STRING_H_

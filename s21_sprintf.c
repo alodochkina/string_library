@@ -21,15 +21,16 @@ int s21_sprintf(char *str, const char* format, ...) {
     }
   } va_end(arg);
   parser_format(&start_point);
-//  print(str,&start_point);
+  print(str,&start_point);
   free(string);
   return 0;
 }
 
 int main() {
   char str[1000];
-  s21_sprintf(str, "My name is %c", 'n');
- // sprintf(str, "My name is %c", 'n');
+ // char str1[1000];
+  s21_sprintf(str, "My name is %u", -5);
+//  sprintf(str, "My name is %u", -5);
   printf("%s\n", str);
   return 0;
 }
