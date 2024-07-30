@@ -133,9 +133,14 @@ int char_to_int(char c) {
 }
 
 char* int_to_string(long long d) {
+  int minus = 1;
+  if (d < 0) {
+    minus = 0;
+    d *= -1;
+  }
   long num = d;
   long sum = d;
-  long count = 0;
+  int count = 0;
   int* result_number = malloc((count+1)*sizeof(int));
   while(num >= 1) {
     num/= 10;
@@ -143,6 +148,11 @@ char* int_to_string(long long d) {
     result_number[count-1] = sum - num * 10;
     sum = num;
     result_number = realloc(result_number,(count + 1) * sizeof(int));
+  }
+  if (minus == 0) {
+    count++;
+    result_number = realloc(result_number, (count + 1) * sizeof(int));
+    result_number[count - 1] = 45;
   }
   char* result_char = malloc((count+1)*sizeof(char));
   for(int i = 0, j = count - 1; i < count; i++, j--) {
@@ -157,17 +167,38 @@ char* int_to_string(long long d) {
     case 7: result_char[j] = '7'; break;
     case 8: result_char[j] = '8'; break;
     case 9: result_char[j] = '9'; break;
+    case 45: result_char[j] = '-'; break;
     default:;
     }
   }
   return result_char;
 }
 
-char string_to_char(char *string) {
-  char c = (long)string - '0';
-  printf("%c ", c);
-  puts("char");
-  return c;
+char* oct_to_string(long long d) {
+  if (d < 0) {
+    d = UINT32_MAX + d + 1;
+  }
+  double num = (unsigned long)d;
+  unsigned long sum = (unsigned long)d / 8;
+  int count = 0;
+  long result_number = 0;
+  if ((unsigned long)d <= 8) {
+    return int_to_string(d);
+  } else {
+    do {
+      num = (num / 8 - sum) * 8;
+      count++;
+      for (int i = 0; i < count - 1; i++) {
+        num *= 10;
+      }
+      result_number += num;
+      num = sum;
+      sum /= 8;
+
+    } while (num >= 1);
+    printf("%ld ", result_number);
+    puts("result_number");
+  } return int_to_string(result_number);
 }
 
 void print(char* string, S21_forma* curr_point) {
@@ -212,12 +243,13 @@ void print_character(S21_forma* curr_point, char* res) {
 
 void print_integer(S21_forma* curr_point, char* res) {
   char *s = malloc(sizeof(curr_point->str_argument));
-  if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)
+  if (curr_point->parser.specifier == d || curr_point->parser.specifier == i ||
+      (curr_point->parser.specifier == u && (long)curr_point->str_argument >= 0))
     s = int_to_string((long)curr_point->str_argument);
-  if (curr_point->parser.specifier == u)
-    printf("%u \n", UINT32_MAX);
-  puts("popo");
+  if (curr_point->parser.specifier == u && (long)curr_point->str_argument < 0)
     s = int_to_string(UINT32_MAX + (long)curr_point->str_argument + 1);
+  if (curr_point->parser.specifier == o)
+    s = oct_to_string((long)curr_point->str_argument);
     strcat(res, s);
 }
 

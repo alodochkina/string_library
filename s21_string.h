@@ -70,7 +70,7 @@ void check_length(S21_forma* curr_point, int* i);
 void check_specifier(S21_forma* specifier, int* i);
 int char_to_int(char c);
 char* int_to_string(long long d);
-char string_to_char(char* string);
+char* oct_to_string(long long d);
 void print(char* str, S21_forma* start_point);
 void print_character(S21_forma* curr_point, char* res);
 void print_integer(S21_forma* curr_point, char* res);
