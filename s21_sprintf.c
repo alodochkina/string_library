@@ -29,8 +29,8 @@ int s21_sprintf(char *str, const char* format, ...) {
 int main() {
   char str[1000];
  // char str1[1000];
-  s21_sprintf(str, "My name is %o", -890);
-//  sprintf(str, "My name is %o", -890);
+//  s21_sprintf(str, "My name is %f", 356.6768686);
+  sprintf(str, "My name is %f", 356.6768686);
   printf("%s\n", str);
   return 0;
 }
