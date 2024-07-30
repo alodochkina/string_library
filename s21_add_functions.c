@@ -307,8 +307,11 @@ void print_integer(S21_forma* curr_point, char* res) {
 
 void print_float(S21_forma* curr_point, char* res) {
   int up = 0;
-  char* s = malloc(sizeof(curr_point->str_argument));
-  if (curr_point->parser.specifier == f || curr_point->parser.specifier == F)
+  char* sb = malloc(sizeof(curr_point->str_argument));
+  char* sa = malloc(sizeof(curr_point->str_argument));
+  if (curr_point->parser.specifier == f || curr_point->parser.specifier == F) {
+    sb = int_to_string((long)curr_point->str_argument);
+  }
 }
 
 char* print_others(S21_forma* curr_point) {
