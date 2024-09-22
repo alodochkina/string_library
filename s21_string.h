@@ -12,7 +12,9 @@ enum flags { no_flag,  minus, plus, space, number_sign, null };
 enum widths { no_width, number, asteriks };
 enum precisions { no_precision, point_number, point_asteriks };
 enum lengths { no_length, h, l, L };
-enum specifiers { no_specifier, c, d, i, e, E, f, g, G, o, s, u, x, X, p, n, percent};
+enum specifiers { no_specifier, c, d, i, e, E, f, g, G, o, s, u, x, X, p, n,
+                  percent};
+enum signs { positive, negative };
 
 struct s21_parse_format {
   enum flags flag;
@@ -70,8 +72,10 @@ void check_length(S21_forma* curr_point, int* i);
 void check_specifier(S21_forma* specifier, int* i);
 int char_to_int(char c);
 char* int_to_string(long long d);
-char* oct_to_string(long long d);
-char* hex_to_string(long long d, int up);
+char* uint_to_string(long long d);
+char* oct_to_string(long* d);
+char* hex_to_string(long* d, int up);
+char* float_to_string(char* d);
 void print(char* str, S21_forma* start_point);
 void print_character(S21_forma* curr_point, char* res);
 void print_integer(S21_forma* curr_point, char* res);

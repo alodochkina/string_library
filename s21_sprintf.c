@@ -14,7 +14,7 @@ int s21_sprintf(char *str, const char* format, ...) {
         curr_point = curr_point->next_format;
       } else {
         curr_point->str_argument = curr_point->str_format;
-        curr_point->str_format = "%";
+        curr_point->str_format = "";
         curr_point = curr_point->next_format;
         curr_point->str_argument = string;
       }
@@ -29,8 +29,8 @@ int s21_sprintf(char *str, const char* format, ...) {
 int main() {
   char str[1000];
  // char str1[1000];
-//  s21_sprintf(str, "My name is %f", 356.6768686);
-  sprintf(str, "My name is %f", 356.6768686);
+  s21_sprintf(str, "My name is %%", 'w');
+//  sprintf(str, "My name is %%", 'lklk');
   printf("%s\n", str);
   return 0;
 }
