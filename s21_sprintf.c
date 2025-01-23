@@ -1,36 +1,53 @@
 #include "s21_string.h"
 
 int s21_sprintf(char *str, const char* format, ...) {
-  S21_forma start_point;
-  S21_forma* curr_point = &start_point;
+  S21_forma* start_point = malloc(sizeof(S21_forma));
+  S21_forma* curr_point = malloc(sizeof(S21_forma));
+  *curr_point = *start_point;
   check_format(format, curr_point);
+  parser_format(start_point);
   va_list arg;
-  char* string = (char*)malloc(sizeof(char) * 1000);
-  if (string != s21_NULL) {
-    va_start(arg, format);
-    while ((string = va_arg(arg, char *)) != s21_NULL) {
-      if (*curr_point->str_format == '%' ) {
-        curr_point->str_argument = string;
-        curr_point = curr_point->next_format;
-      } else {
-        curr_point->str_argument = curr_point->str_format;
-        curr_point->str_format = "";
-        curr_point = curr_point->next_format;
-        curr_point->str_argument = string;
-      }
-    }
-  } va_end(arg);
-  parser_format(&start_point);
+  va_start(arg, format);
+  while(curr_point) {
+    switch (curr_point->parser.specifier) {
+    case no_specifier:
+      curr_point->str_argument = curr_point->str_format;
+      curr_point->str_format = "";
+      break;
+    case c:
+    case percent:
+    case p:
+    case n:
+    case s:
+      curr_point->str_argument = va_arg(arg, char*);
+      break;
+    case d:
+    case i:
+    case o:
+    case u:
+    case x:
+    case X:
+      curr_point->str_argument = va_arg(arg, long*);
+      break;
+    case e:
+    case E:
+    case f:
+    case g:
+    case G:
+      curr_point->str_argument = va_arg(arg, double *);
+      break;
+    } curr_point = curr_point->next_format;
+  }
+  va_end(arg);
   print(str,&start_point);
-  free(string);
   return 0;
 }
 
 int main() {
   char str[1000];
  // char str1[1000];
-  s21_sprintf(str, "My name is %%", 'w');
-//  sprintf(str, "My name is %%", 'lklk');
+//  s21_sprintf(str, "My name is %d", 124);
+  sprintf(str, "My name is %d", 124);
   printf("%s\n", str);
   return 0;
 }

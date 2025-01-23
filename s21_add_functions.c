@@ -2,14 +2,13 @@
 #include <string.h>
 
 void check_format(const char *format, S21_forma* curr_point) {
-  int size = strlen(format) + 1;
+  unsigned size = strlen(format) + 1;
   char* string = (char*)malloc(sizeof(char)*size);
-  char* str;
   strcpy(string, format);
-  S21_forma* new_point;
+  S21_forma* new_point = malloc(sizeof(S21_forma));
   for (int i = 0; *format != '\0'; i++, format++) {
     if (*format == '%' && i != 0 && *(format-1) != '%') {
-      str = malloc(sizeof(char)*i);
+      char* str = malloc(sizeof(char)*i);
       strncpy(str, string, i);
       string += i;
       curr_point->str_format = str;
@@ -181,22 +180,22 @@ int char_to_int(char c) {
   } return res;
 }
 
-char* int_to_string(long long d) {
+char* int_to_string(long d) {
   enum signs sign = positive;
-  if ((int)d < 0) {
+  if (d < 0) {
     sign = negative;
     d *= -1;
   }
   int num = d;
   int sum = d;
   int count = 0;
-  long* result_number = malloc((count+1)*sizeof(long));
+  int* result_number = malloc((count+1)*sizeof(int));
   while(num >= 1) {
     num/= 10;
     count++;
     result_number[count-1] = sum - num * 10;
     sum = num;
-    result_number = realloc(result_number,(count + 1) * sizeof(long));
+    result_number = realloc(result_number,(count + 1) * sizeof(int));
   }
   if (sign == negative) {
     count++;
@@ -224,18 +223,18 @@ char* int_to_string(long long d) {
   return result_char;
 }
 
-char* uint_to_string(long long d) {
+char* uint_to_string(long d) {
   enum signs sign = positive;
   long num = d;
   long sum = d;
   int count = 0;
-  long* result_number = malloc((count+1)*sizeof(long));
+  int* result_number = malloc((count+1)*sizeof(int));
   while(num >= 1) {
     num/= 10;
     count++;
     result_number[count-1] = sum - num * 10;
     sum = num;
-    result_number = realloc(result_number,(count + 1) * sizeof(long));
+    result_number = realloc(result_number,(count + 1) * sizeof(int));
   }
   if (sign == negative) {
     count++;
@@ -264,7 +263,7 @@ char* uint_to_string(long long d) {
 }
 
 
-char* oct_to_string(long* d) {
+char* oct_to_string(long d) {
   if (d < 0) {
     d = UINT32_MAX + d + 1;
   }
@@ -273,7 +272,7 @@ char* oct_to_string(long* d) {
   int count = 0;
   long result_number = 0;
   if ((unsigned long)d <= 8) {
-    return int_to_string(*d);
+    return int_to_string(d);
   } else {
     do {
       num = (num / 8 - sum) * 8;
@@ -288,7 +287,7 @@ char* oct_to_string(long* d) {
   } return int_to_string(result_number);
 }
 
-char* hex_to_string(long* d, int up) {
+char* hex_to_string(long d, int up) {
   if (d < 0) {
     d = UINT32_MAX + d + 1;
   }
@@ -338,38 +337,36 @@ char* hex_to_string(long* d, int up) {
 }
 
 void print(char* string, S21_forma* curr_point) {
-  char res[1000] = {0};
   while (curr_point != s21_NULL) {
     if (curr_point->parser.specifier == no_specifier ||
         curr_point->parser.specifier == c ||
         curr_point->parser.specifier == s ||
         curr_point->parser.specifier == percent) {
-      print_character(curr_point, res);
+      print_character(curr_point, string);
     } else if (curr_point->parser.specifier == d ||
                curr_point->parser.specifier == i ||
                curr_point->parser.specifier == o ||
                curr_point->parser.specifier == u ||
                curr_point->parser.specifier == x ||
                curr_point->parser.specifier == X) {
-      print_integer(curr_point, res);
+      print_integer(curr_point, string);
     } else if (curr_point->parser.specifier == e ||
                curr_point->parser.specifier == E ||
                curr_point->parser.specifier == f ||
                curr_point->parser.specifier == g ||
                curr_point->parser.specifier == G) {
-        print_float(curr_point, res);
+        print_float(curr_point, string);
       } else if (curr_point->parser.specifier == p ||
                curr_point->parser.specifier == n) {
         curr_point->result_string = print_others(curr_point);
     } curr_point = curr_point->next_format;
-    printf("%s\n", res);
+    printf("%s\n", string);
     puts("lop");
   }
 }
 
 void print_character(S21_forma* curr_point, char* res) {
   if (curr_point->parser.specifier == c) {
-    char *c = curr_point->str_argument;
     int size = strlen(res);
     *(res+size) = (long)curr_point->str_argument - 0;
   } else if (curr_point->parser.specifier == percent) {
@@ -383,22 +380,23 @@ void print_integer(S21_forma* curr_point, char* res) {
   int up = 0;
   char *s = malloc(sizeof(curr_point->str_argument));
   if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)
-    s = int_to_string((long)(UINT32_MAX + curr_point->str_argument + 1));
+    s = int_to_string((long)curr_point->str_argument);
   if (curr_point->parser.specifier == u)
     s = uint_to_string((long)(UINT32_MAX + curr_point->str_argument + 1));
   if (curr_point->parser.specifier == o)
-    s = oct_to_string(curr_point->str_argument);
+    s = oct_to_string((long)curr_point->str_argument);
   if (curr_point->parser.specifier == x || curr_point->parser.specifier == X) {
     if (curr_point->parser.specifier == x) {
       up = 1;
     }
-    s = hex_to_string(curr_point->str_argument, up);
+    s = hex_to_string((long)curr_point->str_argument, up);
   }
     strcat(res, s);
 }
 
 void print_float(S21_forma* curr_point, char* res) {
   enum signs sign = positive;
+  int t;
   char *s = malloc(sizeof(curr_point->str_argument));
   if (curr_point->parser.specifier == f)
     s = float_to_string(curr_point->str_argument);
@@ -406,20 +404,20 @@ void print_float(S21_forma* curr_point, char* res) {
 }
 
 char* float_to_string(char* d) {
-  enum signs sign = positive;
-  char* k = d;
-for (int i = 0; *k != '\0'; i++) {
-  if ((long)*k == 1) {
-    puts("fuck");
-  }
-}
-  if (d < 0) {
-    sign = negative;
-  }
-  printf("%f\n", d);
+//  float t = (float)(d/10*10);
+//  printf("%lu\n", t);
+  int s = sizeof(d);
+  printf("%c\n", (char)d-35);
+  printf("%lu\n", d[0]);
+  puts("ddkkdk");
   int count = 0;
-  double* result_number = malloc((count+1)*sizeof(double));
-  puts("djdjd");
+
+  printf("%f\n", d);
+  puts("jfjfjfj");
+  puts("djdjdjdj");
+  puts("ololo");
+  puts("dkdkdkdkd");
+  enum signs sign = positive;
   return "re";
 }
 
