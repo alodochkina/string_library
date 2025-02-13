@@ -238,72 +238,74 @@ char *int_to_string(long d) {
   }
   long num = d;
   long sum = d;
-  long *result_number = malloc(sizeof(long));
-  void *temp = result_number;
-  if (!result_number) {
-    exit(0);
-  }
   int count = 0;
-  while (num >= 1) {
-    num /= 10;
-    result_number[count++] = sum - num * 10;
-    sum = num;
-    result_number = realloc(result_number, sizeof(long) * (count + 1));
-    if (!result_number) {
-      exit(0);
+  long *result_number = malloc(sizeof(long));
+  if (result_number != NULL) {
+    while (num >= 1) {
+      num /= 10;
+      result_number[count++] = sum - num * 10;
+      puts("lolo");
+      printf("%ld\n", result_number[count - 1]);
+      sum = num;
+      result_number = (long *) realloc(result_number, sizeof(long) * (count+1));
+      if (result_number == NULL) {
+        exit(0);
+      }
     }
-  if (sign == negative) {
-    count++;
-    result_number = realloc(result_number, sizeof(long)*(count+1));
-    if (!temp) {
-      exit(0);
-    } free(temp);
-    result_number = temp;
-    result_number[count - 1] = 45;
+    if (sign == negative) {
+      count++;
+      result_number = (long *) realloc(result_number, sizeof(long) * (count+1));
+      if (result_number != NULL) {
+        result_number[count] = 45;
+      } else {
+        exit(0);
+      }
+    }
   }
-  char *result_char = malloc(count * sizeof(char));
-  for (int i = 0, j = count - 1; i < count; i++, j--) {
-    switch (result_number[i]) {
-      case 0:
-        result_char[j] = '0';
-      break;
-      case 1:
-        result_char[j] = '1';
-      break;
-      case 2:
-        result_char[j] = '2';
-      break;
-      case 3:
-        result_char[j] = '3';
-      break;
-      case 4:
-        result_char[j] = '4';
-      break;
-      case 5:
-        result_char[j] = '5';
-      break;
-      case 6:
-        result_char[j] = '6';
-      break;
-      case 7:
-        result_char[j] = '7';
-      break;
-      case 8:
-        result_char[j] = '8';
-      break;
-      case 9:
-        result_char[j] = '9';
-      break;
-      case 45:
-        result_char[j] = '-';
-      break;
-      case 46:
-        result_char[j] = '.';
-      break;
-      default:
+    char *result_char = malloc(count * sizeof(char));
+    for (int i = 0, j = count - 1; i < count; i++, j--) {
+      switch (result_number[i]) {
+        case 0:
+          result_char[j] = '0';
         break;
+        case 1:
+          result_char[j] = '1';
+        break;
+        case 2:
+          result_char[j] = '2';
+        break;
+        case 3:
+          result_char[j] = '3';
+        break;
+        case 4:
+          result_char[j] = '4';
+        break;
+        case 5:
+          result_char[j] = '5';
+        break;
+        case 6:
+          result_char[j] = '6';
+        break;
+        case 7:
+          result_char[j] = '7';
+        break;
+        case 8:
+          result_char[j] = '8';
+        break;
+        case 9:
+          result_char[j] = '9';
+        break;
+        case 45:
+          result_char[j] = '-';
+        break;
+        case 46:
+          result_char[j] = '.';
+        break;
+        default:
+          break;
+      }
     }
-  } free(result_number);
+  free(result_number);
   return result_char;
 }
 
