@@ -1,5 +1,6 @@
 #include "s21_string.h"
 #include <string.h>
+#include <arm/limits.h>
 
 void check_format(const char *format, S21_forma *curr_point) {
   unsigned size = strlen(format) + 1;
@@ -244,25 +245,24 @@ char *int_to_string(long d) {
     while (num >= 1) {
       num /= 10;
       result_number[count++] = sum - num * 10;
-      puts("lolo");
-      printf("%ld\n", result_number[count - 1]);
       sum = num;
-      result_number = (long *) realloc(result_number, sizeof(long) * (count+1));
+      result_number = (long *) realloc(result_number, sizeof(long) * (count + 1));
       if (result_number == NULL) {
         exit(0);
       }
     }
     if (sign == negative) {
       count++;
-      result_number = (long *) realloc(result_number, sizeof(long) * (count+1));
+      result_number = (long *) realloc(result_number, sizeof(long) * (count));
       if (result_number != NULL) {
-        result_number[count] = 45;
+        result_number[count - 1] = 45;
+        printf("%d %ld\n", count, result_number[count]);
       } else {
         exit(0);
       }
     }
   }
-    char *result_char = malloc(count * sizeof(char));
+    char *result_char = malloc((count + 1) * sizeof(char));
     for (int i = 0, j = count - 1; i < count; i++, j--) {
       switch (result_number[i]) {
         case 0:
@@ -528,7 +528,7 @@ void print_character(S21_forma *curr_point, char *res) {
   }
 }
 
-void print_integer(S21_forma *curr_point, char *res) {
+void print_integer(const S21_forma *curr_point, char *res) {
   int up = 0;
   char *s = malloc(sizeof(curr_point->str_argument));
   if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)

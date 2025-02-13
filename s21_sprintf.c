@@ -45,8 +45,8 @@ int s21_sprintf(char *str, const char* format, ...) {
 int main() {
   char str[1000];
  // char str1[1000];
-  s21_sprintf(str, "My name is %d", 12);
-//  sprintf(str, "My name is %c", '');
+  s21_sprintf(str, "My name is %d", 700);
+  // sprintf(str, "My name is %d", "sasd");
   printf("%s\n", str);
   return 0;
 }

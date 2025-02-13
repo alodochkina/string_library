@@ -78,7 +78,7 @@ char* hex_to_string(long d, int up);
 char* float_to_string(char* d);
 void print(char* str, S21_forma* start_point);
 void print_character(S21_forma* curr_point, char* res);
-void print_integer(S21_forma* curr_point, char* res);
+void print_integer(const S21_forma* curr_point, char* res);
 void print_float(S21_forma* curr_point, char* res);
 char* print_others(S21_forma* curr_point);
 #endif //  SRC_S21_STRING_H_
