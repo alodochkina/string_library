@@ -1,28 +1,28 @@
 #include "s21_string.h"
 #include <string.h>
 
-void check_format(const char *format, S21_forma* curr_point) {
+void check_format(const char *format, S21_forma *curr_point) {
   unsigned size = strlen(format) + 1;
-  char* string = (char*)malloc(sizeof(char)*size);
+  char *string = (char *) malloc(sizeof(char) * size);
   strcpy(string, format);
-  S21_forma* new_point = malloc(sizeof(S21_forma));
   for (int i = 0; *format != '\0'; i++, format++) {
-    if (*format == '%' && i != 0 && *(format-1) != '%') {
-      char* str = malloc(sizeof(char)*i);
+    if (*format == '%' && i != 0 && *(format - 1) != '%') {
+      char *str = malloc(sizeof(char) * i);
       strncpy(str, string, i);
       string += i;
       curr_point->str_format = str;
       i = 0;
-      new_point = malloc(sizeof(S21_forma));
+      S21_forma *new_point = malloc(sizeof(S21_forma));
       curr_point->next_format = new_point;
       curr_point = new_point;
     }
-  } if (*string != '\0') {
+  }
+  if (*string != '\0') {
     curr_point->str_format = string;
   }
 }
 
-void parser_format(S21_forma* curr_point) {
+void parser_format(S21_forma *curr_point) {
   int i = 1;
   while (curr_point != s21_NULL) {
     if (*curr_point->str_format == '%') {
@@ -37,22 +37,38 @@ void parser_format(S21_forma* curr_point) {
   }
 }
 
-void check_flags(S21_forma* curr_point, int* i) {
+void check_flags(S21_forma *curr_point, int *i) {
   switch (curr_point->str_format[*i]) {
-  case '-': curr_point->parser.flag = minus; ++*i; break;
-  case '+': curr_point->parser.flag = plus; ++*i; break;
-  case ' ': curr_point->parser.flag = space; ++*i; break;
-  case '#': curr_point->parser.flag = number_sign; ++*i; break;
-  case '0': curr_point->parser.flag = null; ++*i; break;
-  default: curr_point->parser.flag = no_flag;
+    case '-':
+      curr_point->parser.flag = minus;
+      ++*i;
+      break;
+    case '+':
+      curr_point->parser.flag = plus;
+      ++*i;
+      break;
+    case ' ':
+      curr_point->parser.flag = space;
+      ++*i;
+      break;
+    case '#':
+      curr_point->parser.flag = number_sign;
+      ++*i;
+      break;
+    case '0':
+      curr_point->parser.flag = null;
+      ++*i;
+      break;
+    default:
+      curr_point->parser.flag = no_flag;
   }
 }
 
-void check_width(S21_forma* curr_point, int* i) {
-  if ((int)curr_point->str_format[*i] > 47 && (int)curr_point->str_format[*i] < 58) {
+void check_width(S21_forma *curr_point, int *i) {
+  if ((int) curr_point->str_format[*i] > 47 && (int) curr_point->str_format[*i] < 58) {
     curr_point->parser.width = number;
     int num = char_to_int(curr_point->str_format[(*i)++]);
-    while((int)curr_point->str_format[*i] > 47 && (int)curr_point->str_format[*i] < 58 ) {
+    while ((int) curr_point->str_format[*i] > 47 && (int) curr_point->str_format[*i] < 58) {
       num *= 10;
       num += char_to_int(curr_point->str_format[(*i)++]);
     }
@@ -65,36 +81,47 @@ void check_width(S21_forma* curr_point, int* i) {
   }
 }
 
-void check_precision(S21_forma* curr_point, int* i) {
+void check_precision(S21_forma *curr_point, int *i) {
   if (curr_point->str_format[*i] == '.') {
     ++*i;
     curr_point->parser.precision = point_number;
     if (curr_point->str_format[*i] == '*') {
       curr_point->parser.precision = point_asteriks;
-    } else if ((int)curr_point->str_format[*i] > 47 && (int)curr_point->str_format[*i] < 58){
+    } else if ((int) curr_point->str_format[*i] > 47 && (int) curr_point->str_format[*i] < 58) {
       int num = char_to_int(curr_point->str_format[(*i)++]);
-      while ((int)curr_point->str_format[*i] > 47 &&
-             (int)curr_point->str_format[*i] < 58) {
+      while ((int) curr_point->str_format[*i] > 47 &&
+             (int) curr_point->str_format[*i] < 58) {
         num *= 10;
         num += char_to_int(curr_point->str_format[(*i)++]);
-      } curr_point->parser.precision_num = num;
+      }
+      curr_point->parser.precision_num = num;
     }
   } else {
     curr_point->parser.precision = no_precision;
   }
 }
 
-void check_length(S21_forma* curr_point, int* i) {
+void check_length(S21_forma *curr_point, int *i) {
   switch (curr_point->str_format[*i]) {
-  case 'h': curr_point->parser.length = h; ++*i; break;
-  case 'l': curr_point->parser.length = l; ++*i; break;
-  case 'L': curr_point->parser.length = L; ++*i; break;
-  default: curr_point->parser.length = no_length;
+    case 'h':
+      curr_point->parser.length = h;
+      ++*i;
+      break;
+    case 'l':
+      curr_point->parser.length = l;
+      ++*i;
+      break;
+    case 'L':
+      curr_point->parser.length = L;
+      ++*i;
+      break;
+    default:
+      curr_point->parser.length = no_length;
   }
 }
 
-void check_specifier(S21_forma* curr_point, int* count) {
-    switch (curr_point->str_format[*count]) {
+void check_specifier(S21_forma *curr_point, int *count) {
+  switch (curr_point->str_format[*count]) {
     case 'c':
       curr_point->parser.specifier = c;
       ++*count;
@@ -160,118 +187,200 @@ void check_specifier(S21_forma* curr_point, int* count) {
       ++*count;
       break;
     default:
-        curr_point->parser.specifier = no_specifier;
+      curr_point->parser.specifier = no_specifier;
   }
 }
 
 int char_to_int(char c) {
   int res;
-  switch(c){
-  case 48: res = 0; break;
-  case 49: res = 1; break;
-  case 50: res = 2; break;
-  case 51: res = 3; break;
-  case 52: res = 4; break;
-  case 53: res = 5; break;
-  case 54: res = 6; break;
-  case 55: res = 7; break;
-  case 56: res = 8; break;
-  case 57: res = 9; break;
-  } return res;
+  switch (c) {
+    case 48:
+      res = 0;
+      break;
+    case 49:
+      res = 1;
+      break;
+    case 50:
+      res = 2;
+      break;
+    case 51:
+      res = 3;
+      break;
+    case 52:
+      res = 4;
+      break;
+    case 53:
+      res = 5;
+      break;
+    case 54:
+      res = 6;
+      break;
+    case 55:
+      res = 7;
+      break;
+    case 56:
+      res = 8;
+      break;
+    case 57:
+      res = 9;
+      break;
+    default:
+      res = -1;
+  }
+  return res;
 }
 
-char* int_to_string(long d) {
+char *int_to_string(long d) {
   enum signs sign = positive;
   if (d < 0) {
     sign = negative;
     d *= -1;
   }
-  int num = d;
-  int sum = d;
-  int count = 0;
-  int* result_number = malloc((count+1)*sizeof(int));
-  while(num >= 1) {
-    num/= 10;
-    count++;
-    result_number[count-1] = sum - num * 10;
-    sum = num;
-    result_number = realloc(result_number,(count + 1) * sizeof(int));
+  long num = d;
+  long sum = d;
+  long *result_number = malloc(sizeof(long));
+  void *temp = result_number;
+  if (!result_number) {
+    exit(0);
   }
+  int count = 0;
+  while (num >= 1) {
+    num /= 10;
+    result_number[count++] = sum - num * 10;
+    sum = num;
+    result_number = realloc(result_number, sizeof(long) * (count + 1));
+    if (!result_number) {
+      exit(0);
+    }
   if (sign == negative) {
     count++;
-    result_number = realloc(result_number, (count + 1) * sizeof(int));
+    result_number = realloc(result_number, sizeof(long)*(count+1));
+    if (!temp) {
+      exit(0);
+    } free(temp);
+    result_number = temp;
     result_number[count - 1] = 45;
   }
-  char* result_char = malloc((count+1)*sizeof(char));
-  for(int i = 0, j = count - 1; i < count; i++, j--) {
-    switch(result_number[i]) {
-    case 0: result_char[j] = '0'; break;
-    case 1: result_char[j] = '1'; break;
-    case 2: result_char[j] = '2'; break;
-    case 3: result_char[j] = '3'; break;
-    case 4: result_char[j] = '4'; break;
-    case 5: result_char[j] = '5'; break;
-    case 6: result_char[j] = '6'; break;
-    case 7: result_char[j] = '7'; break;
-    case 8: result_char[j] = '8'; break;
-    case 9: result_char[j] = '9'; break;
-    case 45: result_char[j] = '-'; break;
-    case 46: result_char[j] = '.'; break;
-    default: break;
+  char *result_char = malloc(count * sizeof(char));
+  for (int i = 0, j = count - 1; i < count; i++, j--) {
+    switch (result_number[i]) {
+      case 0:
+        result_char[j] = '0';
+      break;
+      case 1:
+        result_char[j] = '1';
+      break;
+      case 2:
+        result_char[j] = '2';
+      break;
+      case 3:
+        result_char[j] = '3';
+      break;
+      case 4:
+        result_char[j] = '4';
+      break;
+      case 5:
+        result_char[j] = '5';
+      break;
+      case 6:
+        result_char[j] = '6';
+      break;
+      case 7:
+        result_char[j] = '7';
+      break;
+      case 8:
+        result_char[j] = '8';
+      break;
+      case 9:
+        result_char[j] = '9';
+      break;
+      case 45:
+        result_char[j] = '-';
+      break;
+      case 46:
+        result_char[j] = '.';
+      break;
+      default:
+        break;
     }
-  }
+  } free(result_number);
   return result_char;
 }
 
-char* uint_to_string(long d) {
+char *uint_to_string(long d) {
   enum signs sign = positive;
   long num = d;
   long sum = d;
   int count = 0;
-  int* result_number = malloc((count+1)*sizeof(int));
-  while(num >= 1) {
-    num/= 10;
+  int *result_number = malloc((count + 1) * sizeof(int));
+  while (num >= 1) {
+    num /= 10;
     count++;
-    result_number[count-1] = sum - num * 10;
+    result_number[count - 1] = sum - num * 10;
     sum = num;
-    result_number = realloc(result_number,(count + 1) * sizeof(int));
+    result_number = realloc(result_number, (count + 1) * sizeof(int));
   }
   if (sign == negative) {
     count++;
     result_number = realloc(result_number, (count + 1) * sizeof(int));
     result_number[count - 1] = 45;
   }
-  char* result_char = malloc((count+1)*sizeof(char));
-  for(int i = 0, j = count - 1; i < count; i++, j--) {
-    switch(result_number[i]) {
-    case 0: result_char[j] = '0'; break;
-    case 1: result_char[j] = '1'; break;
-    case 2: result_char[j] = '2'; break;
-    case 3: result_char[j] = '3'; break;
-    case 4: result_char[j] = '4'; break;
-    case 5: result_char[j] = '5'; break;
-    case 6: result_char[j] = '6'; break;
-    case 7: result_char[j] = '7'; break;
-    case 8: result_char[j] = '8'; break;
-    case 9: result_char[j] = '9'; break;
-    case 45: result_char[j] = '-'; break;
-    case 46: result_char[j] = '.'; break;
-    default: break;
+  char *result_char = malloc((count + 1) * sizeof(char));
+  for (int i = 0, j = count - 1; i < count; i++, j--) {
+    switch (result_number[i]) {
+      case 0:
+        result_char[j] = '0';
+        break;
+      case 1:
+        result_char[j] = '1';
+        break;
+      case 2:
+        result_char[j] = '2';
+        break;
+      case 3:
+        result_char[j] = '3';
+        break;
+      case 4:
+        result_char[j] = '4';
+        break;
+      case 5:
+        result_char[j] = '5';
+        break;
+      case 6:
+        result_char[j] = '6';
+        break;
+      case 7:
+        result_char[j] = '7';
+        break;
+      case 8:
+        result_char[j] = '8';
+        break;
+      case 9:
+        result_char[j] = '9';
+        break;
+      case 45:
+        result_char[j] = '-';
+        break;
+      case 46:
+        result_char[j] = '.';
+        break;
+      default:
+        break;
     }
   }
   return result_char;
 }
 
 
-char* oct_to_string(long d) {
+char *oct_to_string(long d) {
   if (d < 0) {
     d = UINT32_MAX + d + 1;
   }
-  double num = (unsigned long)d;
-  unsigned long sum = (unsigned long)d / 8;
+  double num = (unsigned long) d;
+  unsigned long sum = (unsigned long) d / 8;
   int count = 0;
   long result_number = 0;
-  if ((unsigned long)d <= 8) {
+  if ((unsigned long) d <= 8) {
     return int_to_string(d);
   } else {
     do {
@@ -284,18 +393,19 @@ char* oct_to_string(long d) {
       num = sum;
       sum /= 8;
     } while (num >= 1);
-  } return int_to_string(result_number);
+  }
+  return int_to_string(result_number);
 }
 
-char* hex_to_string(long d, int up) {
+char *hex_to_string(long d, int up) {
   if (d < 0) {
     d = UINT32_MAX + d + 1;
   }
-  unsigned long sum = (unsigned long)d;
+  unsigned long sum = (unsigned long) d;
   int count = 0;
   unsigned long power = 1;
-  int* result_number = malloc((count+1)*sizeof(int));
-  if ((unsigned long)d > 16) {
+  int *result_number = malloc((count + 1) * sizeof(int));
+  if ((unsigned long) d > 16) {
     while (sum > 16) {
       power = 1;
       while (power * 16 < sum) {
@@ -312,31 +422,70 @@ char* hex_to_string(long d, int up) {
     result_number = realloc(result_number, (count + 1) * sizeof(int));
   } else
     count++;
-  char* result_char = malloc((count + 1) * sizeof (char));
+  char *result_char = malloc((count + 1) * sizeof(char));
   for (int i = 0; i < count; i++) {
-    switch(result_number[i]) {
-    case 0: result_char[i] = '0'; break;
-    case 1: result_char[i] = '1'; break;
-    case 2: result_char[i] = '2'; break;
-    case 3: result_char[i] = '3'; break;
-    case 4: result_char[i] = '4'; break;
-    case 5: result_char[i] = '5'; break;
-    case 6: result_char[i] = '6'; break;
-    case 7: result_char[i] = '7'; break;
-    case 8: result_char[i] = '8'; break;
-    case 9: result_char[i] = '9'; break;
-    case 10: if (up == 0) result_char[i] = 'A'; else result_char[i] = 'a'; break;
-    case 11: if (up == 0) result_char[i] = 'B'; else result_char[i] = 'b'; break;
-    case 12: if (up == 0) result_char[i] = 'C'; else result_char[i] = 'c'; break;
-    case 13: if (up == 0) result_char[i] = 'D'; else result_char[i] = 'd'; break;
-    case 14: if (up == 0) result_char[i] = 'E'; else result_char[i] = 'e'; break;
-    case 15: if (up == 0) result_char[i] = 'F'; else result_char[i] = 'f'; break;
-    default:;
+    switch (result_number[i]) {
+      case 0:
+        result_char[i] = '0';
+        break;
+      case 1:
+        result_char[i] = '1';
+        break;
+      case 2:
+        result_char[i] = '2';
+        break;
+      case 3:
+        result_char[i] = '3';
+        break;
+      case 4:
+        result_char[i] = '4';
+        break;
+      case 5:
+        result_char[i] = '5';
+        break;
+      case 6:
+        result_char[i] = '6';
+        break;
+      case 7:
+        result_char[i] = '7';
+        break;
+      case 8:
+        result_char[i] = '8';
+        break;
+      case 9:
+        result_char[i] = '9';
+        break;
+      case 10:
+        if (up == 0) result_char[i] = 'A';
+        else result_char[i] = 'a';
+        break;
+      case 11:
+        if (up == 0) result_char[i] = 'B';
+        else result_char[i] = 'b';
+        break;
+      case 12:
+        if (up == 0) result_char[i] = 'C';
+        else result_char[i] = 'c';
+        break;
+      case 13:
+        if (up == 0) result_char[i] = 'D';
+        else result_char[i] = 'd';
+        break;
+      case 14:
+        if (up == 0) result_char[i] = 'E';
+        else result_char[i] = 'e';
+        break;
+      case 15:
+        if (up == 0) result_char[i] = 'F';
+        else result_char[i] = 'f';
+        break;
+      default: ;
     }
-  } return result_char;
+  }
+  return result_char;
 }
 
-void print(char* string, S21_forma* curr_point) {
+void print(char *string, S21_forma *curr_point) {
   while (curr_point != s21_NULL) {
     if (curr_point->parser.specifier == no_specifier ||
         curr_point->parser.specifier == c ||
@@ -355,20 +504,21 @@ void print(char* string, S21_forma* curr_point) {
                curr_point->parser.specifier == f ||
                curr_point->parser.specifier == g ||
                curr_point->parser.specifier == G) {
-        print_float(curr_point, string);
-      } else if (curr_point->parser.specifier == p ||
+      print_float(curr_point, string);
+    } else if (curr_point->parser.specifier == p ||
                curr_point->parser.specifier == n) {
-        curr_point->result_string = print_others(curr_point);
-    } curr_point = curr_point->next_format;
+      curr_point->result_string = print_others(curr_point);
+    }
+    curr_point = curr_point->next_format;
     printf("%s\n", string);
     puts("lop");
   }
 }
 
-void print_character(S21_forma* curr_point, char* res) {
+void print_character(S21_forma *curr_point, char *res) {
   if (curr_point->parser.specifier == c) {
-    int size = strlen(res);
-    *(res+size) = (long)curr_point->str_argument - 0;
+    s21_size_t size = strlen(res);
+    *(res + size) = (char) (long) curr_point->str_argument;
   } else if (curr_point->parser.specifier == percent) {
     strcat(res, "%");
   } else {
@@ -376,25 +526,25 @@ void print_character(S21_forma* curr_point, char* res) {
   }
 }
 
-void print_integer(S21_forma* curr_point, char* res) {
+void print_integer(S21_forma *curr_point, char *res) {
   int up = 0;
   char *s = malloc(sizeof(curr_point->str_argument));
   if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)
-    s = int_to_string((long)curr_point->str_argument);
+    s = int_to_string((long) curr_point->str_argument);
   if (curr_point->parser.specifier == u)
-    s = uint_to_string((long)(UINT32_MAX + curr_point->str_argument + 1));
+    s = uint_to_string((long) (UINT32_MAX + curr_point->str_argument + 1));
   if (curr_point->parser.specifier == o)
-    s = oct_to_string((long)curr_point->str_argument);
+    s = oct_to_string((long) curr_point->str_argument);
   if (curr_point->parser.specifier == x || curr_point->parser.specifier == X) {
     if (curr_point->parser.specifier == x) {
       up = 1;
     }
-    s = hex_to_string((long)curr_point->str_argument, up);
+    s = hex_to_string((long) curr_point->str_argument, up);
   }
-    strcat(res, s);
+  strcat(res, s);
 }
 
-void print_float(S21_forma* curr_point, char* res) {
+void print_float(S21_forma *curr_point, char *res) {
   enum signs sign = positive;
   int t;
   char *s = malloc(sizeof(curr_point->str_argument));
@@ -403,11 +553,11 @@ void print_float(S21_forma* curr_point, char* res) {
   strcat(res, s);
 }
 
-char* float_to_string(char* d) {
-//  float t = (float)(d/10*10);
-//  printf("%lu\n", t);
+char *float_to_string(char *d) {
+  //  float t = (float)(d/10*10);
+  //  printf("%lu\n", t);
   int s = sizeof(d);
-  printf("%c\n", (char)d-35);
+  printf("%c\n", (char) d - 35);
   printf("%lu\n", d[0]);
   puts("ddkkdk");
   int count = 0;
@@ -421,7 +571,7 @@ char* float_to_string(char* d) {
   return "re";
 }
 
-char* print_others(S21_forma* curr_point) {
-  char* str = " ";
+char *print_others(S21_forma *curr_point) {
+  char *str = " ";
   return str;
 }

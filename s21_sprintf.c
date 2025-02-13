@@ -1,11 +1,10 @@
 #include "s21_string.h"
 
 int s21_sprintf(char *str, const char* format, ...) {
-  S21_forma* start_point = malloc(sizeof(S21_forma));
-  S21_forma* curr_point = malloc(sizeof(S21_forma));
-  *curr_point = *start_point;
+  S21_forma* first_point = malloc(sizeof(S21_forma));
+  S21_forma* curr_point = first_point;
   check_format(format, curr_point);
-  parser_format(start_point);
+  parser_format(curr_point);
   va_list arg;
   va_start(arg, format);
   while(curr_point) {
@@ -39,15 +38,15 @@ int s21_sprintf(char *str, const char* format, ...) {
     } curr_point = curr_point->next_format;
   }
   va_end(arg);
-  print(str,&start_point);
+  print(str,first_point);
   return 0;
 }
 
 int main() {
   char str[1000];
  // char str1[1000];
-//  s21_sprintf(str, "My name is %d", 124);
-  sprintf(str, "My name is %d", 124);
+  s21_sprintf(str, "My name is %d", 12);
+//  sprintf(str, "My name is %c", '');
   printf("%s\n", str);
   return 0;
 }
