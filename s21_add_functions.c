@@ -231,9 +231,11 @@ int char_to_int(char c) {
   return res;
 }
 
-char *int_to_string(long d) {
+char *int_to_string(long d, int negative_u) {
   enum signs sign = positive;
-  if (d < 0) {
+  printf("%ld\n", d);
+  puts("koko");
+  if (d < 0 && negative_u == 0) {
     sign = negative;
     d *= -1;
   }
@@ -241,7 +243,9 @@ char *int_to_string(long d) {
   long sum = d;
   int count = 0;
   long *result_number = malloc(sizeof(long));
-  if (result_number != NULL) {
+  if (result_number == NULL) {
+    exit(0);
+  }
     while (num >= 1) {
       num /= 10;
       result_number[count++] = sum - num * 10;
@@ -261,72 +265,6 @@ char *int_to_string(long d) {
         exit(0);
       }
     }
-  }
-    char *result_char = malloc((count + 1) * sizeof(char));
-    for (int i = 0, j = count - 1; i < count; i++, j--) {
-      switch (result_number[i]) {
-        case 0:
-          result_char[j] = '0';
-        break;
-        case 1:
-          result_char[j] = '1';
-        break;
-        case 2:
-          result_char[j] = '2';
-        break;
-        case 3:
-          result_char[j] = '3';
-        break;
-        case 4:
-          result_char[j] = '4';
-        break;
-        case 5:
-          result_char[j] = '5';
-        break;
-        case 6:
-          result_char[j] = '6';
-        break;
-        case 7:
-          result_char[j] = '7';
-        break;
-        case 8:
-          result_char[j] = '8';
-        break;
-        case 9:
-          result_char[j] = '9';
-        break;
-        case 45:
-          result_char[j] = '-';
-        break;
-        case 46:
-          result_char[j] = '.';
-        break;
-        default:
-          break;
-      }
-    }
-  free(result_number);
-  return result_char;
-}
-
-char *uint_to_string(long d) {
-  enum signs sign = positive;
-  long num = d;
-  long sum = d;
-  int count = 0;
-  int *result_number = malloc((count + 1) * sizeof(int));
-  while (num >= 1) {
-    num /= 10;
-    count++;
-    result_number[count - 1] = sum - num * 10;
-    sum = num;
-    result_number = realloc(result_number, (count + 1) * sizeof(int));
-  }
-  if (sign == negative) {
-    count++;
-    result_number = realloc(result_number, (count + 1) * sizeof(int));
-    result_number[count - 1] = 45;
-  }
   char *result_char = malloc((count + 1) * sizeof(char));
   for (int i = 0, j = count - 1; i < count; i++, j--) {
     switch (result_number[i]) {
@@ -363,13 +301,11 @@ char *uint_to_string(long d) {
       case 45:
         result_char[j] = '-';
         break;
-      case 46:
-        result_char[j] = '.';
-        break;
       default:
         break;
     }
   }
+  free(result_number);
   return result_char;
 }
 
@@ -383,7 +319,7 @@ char *oct_to_string(long d) {
   int count = 0;
   long result_number = 0;
   if ((unsigned long) d <= 8) {
-    return int_to_string(d);
+    return int_to_string(d, 0);
   } else {
     do {
       num = (num / 8 - sum) * 8;
@@ -396,7 +332,7 @@ char *oct_to_string(long d) {
       sum /= 8;
     } while (num >= 1);
   }
-  return int_to_string(result_number);
+  return int_to_string(result_number, 0);
 }
 
 char *hex_to_string(long d, int up) {
@@ -481,7 +417,7 @@ char *hex_to_string(long d, int up) {
         if (up == 0) result_char[i] = 'F';
         else result_char[i] = 'f';
         break;
-      default: ;
+      default:;
     }
   }
   return result_char;
@@ -531,10 +467,15 @@ void print_character(S21_forma *curr_point, char *res) {
 void print_integer(const S21_forma *curr_point, char *res) {
   int up = 0;
   char *s = malloc(sizeof(curr_point->str_argument));
-  if (curr_point->parser.specifier == d || curr_point->parser.specifier == i)
-    s = int_to_string((long) curr_point->str_argument);
-  if (curr_point->parser.specifier == u)
-    s = uint_to_string((long) (UINT32_MAX + curr_point->str_argument + 1));
+  if (curr_point->parser.specifier == d || curr_point->parser.specifier == i || curr_point->parser.specifier == u) {
+    if (curr_point->parser.specifier == u && (long)curr_point->str_argument < 0) {
+      int negative_u = 1;
+      s = int_to_string((long) (UINT32_MAX + curr_point->str_argument + 1), negative_u);
+    } else {
+      int negative_u = 0;
+      s = int_to_string((long) curr_point->str_argument, negative_u);
+    }
+  }
   if (curr_point->parser.specifier == o)
     s = oct_to_string((long) curr_point->str_argument);
   if (curr_point->parser.specifier == x || curr_point->parser.specifier == X) {

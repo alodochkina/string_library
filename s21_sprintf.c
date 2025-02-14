@@ -1,4 +1,5 @@
 #include "s21_string.h"
+#include <string.h>
 
 int s21_sprintf(char *str, const char* format, ...) {
   S21_forma* first_point = malloc(sizeof(S21_forma));
@@ -10,6 +11,9 @@ int s21_sprintf(char *str, const char* format, ...) {
   while(curr_point) {
     switch (curr_point->parser.specifier) {
     case no_specifier:
+      if(curr_point->str_format[strlen(curr_point->str_format) - 1] == '%') {
+        curr_point->str_format[strlen(curr_point->str_format) - 1] = '\0';
+      }
       curr_point->str_argument = curr_point->str_format;
       curr_point->str_format = "";
       break;
@@ -44,9 +48,10 @@ int s21_sprintf(char *str, const char* format, ...) {
 
 int main() {
   char str[1000];
- // char str1[1000];
-  s21_sprintf(str, "My name is %d", 700);
-  // sprintf(str, "My name is %d", "sasd");
-  printf("%s\n", str);
+  char str1[1000];
+  s21_sprintf(str, "My name is %", "eee");
+  puts("pupu");
+  sprintf(str1, "My name is %", "eee");
+  printf("%s\n%s\n", str, str1);
   return 0;
 }
